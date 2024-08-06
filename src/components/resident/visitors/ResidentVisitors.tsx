@@ -13,6 +13,8 @@ import {
 } from "react-icons/fa";
 import AddNewVisitor from "./AddNewVisitor";
 import { addVisitor, getVisitors } from "../../../services/api/resident";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface Visitor {
   _id: number;
@@ -31,6 +33,11 @@ interface Visitor {
 const ResidentVisitors: React.FC = () => {
   const [visitors, setVisitors] = useState<Visitor[]>([]);
   const [showAddVisitor, setShowAddVisitor] = useState(false);
+
+  const residentInfo = useSelector(
+    (state: RootState) => state.auth.residentInfo
+  );
+  const residentId = residentInfo?._id;
 
   const fetchVisitors = async () => {
     try {
@@ -57,6 +64,10 @@ const ResidentVisitors: React.FC = () => {
         formData.append(key, value as string);
       }
     });
+
+    if (residentId) {
+      formData.append("residentId", residentId);
+    }
 
     try {
       await addVisitor(formData);

@@ -24,8 +24,8 @@ const AdminNavbar = () => {
               />
             </div>
           </div>
-          <ModeToggle />
-          <div className="pr-4">
+          <div className="flex items-center space-x-4 pr-4">
+            <ModeToggle />
             <Button
               className="font-bold py-2 px-4 rounded-md transition duration-300 shadow-sm"
               onClick={handleLogout}

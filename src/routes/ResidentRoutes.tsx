@@ -7,6 +7,7 @@ import ResidentServicesPage from "../pages/resident/ResidentServicesPage";
 import ResidentComplaintsPage from "../pages/resident/ResidentComplaintsPage";
 import ResidentProfilePage from "../pages/resident/ResidentProfilePage";
 import ResidentChatPage from "../pages/resident/ResidentChatPage";
+import ResidentCommunityPage from "@/pages/resident/ResidentCommunityPage";
 
 const ResidentRoutes = () => {
   return (
@@ -19,6 +20,7 @@ const ResidentRoutes = () => {
         <Route path="/complaints" element={<ResidentComplaintsPage />} />
         <Route path="/profile" element={<ResidentProfilePage />} />
         <Route path="/chats" element={<ResidentChatPage />} />
+        <Route path="/community" element={<ResidentCommunityPage />} />
       </Route>
     </Routes>
   );

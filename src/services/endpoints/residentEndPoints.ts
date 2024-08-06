@@ -3,7 +3,7 @@ const residentRoutes = {
   residentLogout: "auth/resident/logout",
   changePassword: "auth/resident/change-password",
   addVisitor: "management/visitors/create",
-  getVisitors: "management/visitors/",
+  getVisitors: "management/visitors/all",
   addServiceRequest: "/management/services/request",
   getServiceRequests: "/management/services/requests",
   addComplaint: "/management/complaints/create",

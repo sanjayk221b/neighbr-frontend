@@ -7,6 +7,7 @@ const adminRoutes = {
   getCaretakers: "auth/admin/caretakers",
   addCaretaker: "auth/admin/caretakers/create",
   blockUnblockCaretaker: "auth/admin/caretakers/:id/block-unblock",
+  getAllComplaints: "/management/complaints/all/admin",
 };
 
 export default adminRoutes;

@@ -1,5 +1,5 @@
-import ResidentVisitors from "../../components/resident/visitor/ResidentVisitors";
-import ResidentNavbar from "../../components/resident/ResidentNavbar";
+import ResidentVisitors from "../../components/resident/visitors/ResidentVisitors";
+import ResidentNavbar from "../../components/resident/navbar/ResidentNavbar";
 
 const ResidentVisitorsPage: React.FC = () => {
   return (

@@ -115,3 +115,12 @@ export const blockUnblockCaretaker = async (caretakerId: string) => {
     throw error;
   }
 };
+
+export const getAllComplaints = async () => {
+  try {
+    const response = await adminApi.get(adminRoutes.getAllComplaints);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

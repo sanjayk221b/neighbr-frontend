@@ -1,5 +1,5 @@
 import ResidentComplaints from "../../components/resident/complaints/ResidentComplaints";
-import ResidentNavbar from "../../components/resident/ResidentNavbar";
+import ResidentNavbar from "../../components/resident/navbar/ResidentNavbar";
 
 const ResidentComplaintsPage = () => {
   return (

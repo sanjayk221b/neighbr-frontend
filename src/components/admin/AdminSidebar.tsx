@@ -8,24 +8,21 @@ const AdminSidebar: React.FC = () => {
     { path: "/admin/dashboard", label: "Dashboard" },
     { path: "/admin/owners", label: "Residents" },
     { path: "/admin/caretakers", label: "Caretakers" },
-    // { path: "#", label: "Announcements" },
-    // { path: "#", label: "Feedback" },
-    // { path: "#", label: "Community" },
-    // { path: "#", label: "Messages" },
+    { path: "/admin/complaints", label: "Complaints" },
   ];
 
   return (
-    <div className="font-medium text-xl pt-16 w-64 min-h-screen p-4">
-      <nav>
+    <div className="w-64 h-full bg-background border-r">
+      <nav className="p-4 pt-16">
         <ul className="space-y-5">
           {navItems.map((item) => (
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`block py-2 px-4 rounded transition duration-200 ${
+                className={`block py-2 px-4 rounded-lg transition duration-200 text-xl font-medium ${
                   location.pathname === item.path
-                    ? "bg-gray-600 text-white"
-                    : "hover:bg-gray-700"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
                 {item.label}

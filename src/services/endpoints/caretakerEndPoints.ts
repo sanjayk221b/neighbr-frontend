@@ -3,7 +3,7 @@ const caretakerRoutes = {
   caretakerLogout: "auth/caretaker/logout",
   getVisitors: "management/visitors",
   updateVisitor: "management/visitors/",
-  getAllComplaints: "/management/complaints/all",
+  getAllComplaints: "/management/complaints/all/caretaker",
   updateComplaint: "/management/complaints/update",
   getAllServiceRequests: "/management/services/requests/all",
   updateServiceRequests:'management/services/requests/:id/update'

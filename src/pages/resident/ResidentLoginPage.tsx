@@ -1,4 +1,4 @@
-import OwnerLogin from "../../components/resident/ResidentLogin";
+import OwnerLogin from "../../components/resident/login/ResidentLogin";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";

@@ -1,8 +1,8 @@
 import { useState, FormEvent } from "react";
-import { residentLogin } from "../../services/api/resident";
+import { residentLogin } from "../../../services/api/resident";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setResidentLogin } from "../../redux/slices/authSlice";
+import { setResidentLogin } from "../../../redux/slices/authSlice";
 
 const ResidentLogin = () => {
   const [email, setEmail] = useState("");
@@ -60,7 +60,7 @@ const ResidentLogin = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
                 placeholder="Enter email"
               />
             </div>
@@ -76,7 +76,7 @@ const ResidentLogin = () => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
                 placeholder="Enter password"
               />
             </div>

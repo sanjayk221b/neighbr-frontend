@@ -1,4 +1,4 @@
-import ResidentHome from "../../components/resident/ResidentHome";
+import ResidentHome from "../../components/resident/home/ResidentHome";
 
 const ResidentHomePage = () => {
   return (

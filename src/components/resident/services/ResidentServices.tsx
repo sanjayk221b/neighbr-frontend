@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FaPlus,
-  FaToolbox,
-  FaCalendarAlt,
-  FaClock,
-  FaComments,
-} from "react-icons/fa";
+import { FaPlus, FaCalendarAlt, FaClock, FaComments } from "react-icons/fa";
 import {
   addServiceRequest,
   getServiceRequests,

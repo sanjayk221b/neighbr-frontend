@@ -1,4 +1,4 @@
-import ResidentNavbar from "../../components/resident/ResidentNavbar";
+import ResidentNavbar from "../../components/resident/navbar/ResidentNavbar";
 import ResidentServices from "../../components/resident/services/ResidentServices";
 
 const ResidentServicesPage = () => {

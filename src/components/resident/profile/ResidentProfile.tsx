@@ -1,6 +1,13 @@
 import { useState } from "react";
-import { changePassword } from "../../services/api/resident";
-import { FaEnvelope, FaPhone, FaCar, FaHome } from "react-icons/fa";
+import { changePassword } from "../../../services/api/resident";
+import {
+  FaEnvelope,
+  FaPhone,
+  FaCar,
+  FaHome,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const ResidentProfile = ({ resident }) => {
@@ -8,6 +15,9 @@ const ResidentProfile = ({ resident }) => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
@@ -33,7 +43,7 @@ const ResidentProfile = ({ resident }) => {
         <div className="md:flex">
           <div className="md:flex-shrink-0 p-8">
             <img
-              className="h-48 w-48 rounded-full object-cover border-4 border-purple-400 shadow-lg transform hover:rotate-3 transition-transform duration-300"
+              className="h-48 w-48 rounded-full object-cover border-4 border-blue-400 shadow-lg transform hover:rotate-3 transition-transform duration-300"
               src={resident.image || "https://via.placeholder.com/200"}
               alt={resident.name}
             />
@@ -71,7 +81,7 @@ const ResidentProfile = ({ resident }) => {
 
             <button
               onClick={() => setShowPasswordForm(!showPasswordForm)}
-              className="mt-6 bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition-colors duration-300"
+              className="mt-6 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
             >
               Change Password
             </button>
@@ -93,14 +103,29 @@ const ResidentProfile = ({ resident }) => {
                 >
                   Current Password
                 </label>
-                <input
-                  type="password"
-                  id="currentPassword"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showCurrentPassword ? "text" : "password"}
+                    id="currentPassword"
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 pr-10 text-gray-700"
+                    style={{ color: showCurrentPassword ? "black" : "gray" }}
+                    required
+                  />
+
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowCurrentPassword(!showCurrentPassword)}
+                  >
+                    {showCurrentPassword ? (
+                      <FaEyeSlash className="text-gray-500" />
+                    ) : (
+                      <FaEye className="text-gray-500" />
+                    )}
+                  </button>
+                </div>
               </div>
               <div className="mb-4">
                 <label
@@ -109,14 +134,28 @@ const ResidentProfile = ({ resident }) => {
                 >
                   New Password
                 </label>
-                <input
-                  type="password"
-                  id="newPassword"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showNewPassword ? "text" : "password"}
+                    id="newPassword"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 pr-10 text-gray-700"
+                    style={{ color: showNewPassword ? "black" : "gray" }}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowNewPassword(!showNewPassword)}
+                  >
+                    {showNewPassword ? (
+                      <FaEyeSlash className="text-gray-500" />
+                    ) : (
+                      <FaEye className="text-gray-500" />
+                    )}
+                  </button>
+                </div>
               </div>
               <div className="mb-4">
                 <label
@@ -125,19 +164,33 @@ const ResidentProfile = ({ resident }) => {
                 >
                   Confirm Password
                 </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    id="confirmPassword"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600 pr-10 text-gray-700"
+                    style={{ color: showConfirmPassword ? "black" : "gray" }}
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  >
+                    {showConfirmPassword ? (
+                      <FaEyeSlash className="text-gray-500" />
+                    ) : (
+                      <FaEye className="text-gray-500" />
+                    )}
+                  </button>
+                </div>
               </div>
               <div className="flex space-x-4">
                 <button
                   type="submit"
-                  className="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition-colors duration-300"
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-300"
                 >
                   Change Password
                 </button>
@@ -159,7 +212,7 @@ const ResidentProfile = ({ resident }) => {
 
 const InfoItem = ({ icon, text }) => (
   <div className="flex items-center space-x-3 text-gray-700">
-    <span className="text-purple-500">{icon}</span>
+    <span className="text-blue-600">{icon}</span>
     <span>{text}</span>
   </div>
 );

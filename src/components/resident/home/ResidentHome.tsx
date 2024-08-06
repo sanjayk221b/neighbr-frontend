@@ -1,5 +1,5 @@
 import React from "react";
-import ResidentNavbar from "./ResidentNavbar";
+import ResidentNavbar from "../navbar/ResidentNavbar";
 
 const ResidentHome: React.FC = () => {
   return (

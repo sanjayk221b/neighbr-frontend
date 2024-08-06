@@ -17,6 +17,7 @@ const ResidentComplaints = () => {
   const [newComplaint, setNewComplaint] = useState({
     title: "",
     description: "",
+    recipientType: "caretaker",
   });
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +43,9 @@ const ResidentComplaints = () => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
     setNewComplaint((prev) => ({ ...prev, [name]: value }));
@@ -61,6 +64,7 @@ const ResidentComplaints = () => {
       formData.append("title", newComplaint.title);
       formData.append("description", newComplaint.description);
       formData.append("isResolved", "false");
+      formData.append("recipientType", newComplaint.recipientType);
       if (file) {
         formData.append("image", file);
       }
@@ -68,7 +72,11 @@ const ResidentComplaints = () => {
       const response = await addComplaint(formData);
       setComplaints((prev) => [...prev, response]);
       setShowNewComplaintForm(false);
-      setNewComplaint({ title: "", description: "" });
+      setNewComplaint({
+        title: "",
+        description: "",
+        recipientType: "caretaker",
+      });
       setFile(null);
     } catch (error) {
       console.error("Error adding complaint:", error);
@@ -117,6 +125,20 @@ const ResidentComplaints = () => {
                 onChange={handleInputChange}
                 className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
               />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Recipient
+              </label>
+              <select
+                name="recipientType"
+                value={newComplaint.recipientType}
+                onChange={handleInputChange}
+                className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+              >
+                <option value="caretaker">Caretaker</option>
+                <option value="admin">Admin</option>
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
