@@ -1,5 +1,5 @@
-import AdminNavbar from "../../components/admin/AdminNavbar";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminNavbar from "../../components/admin/navbar/AdminNavbar";
+import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 
 const AdminDashboardPage = () => {
   // Dummy data for demonstration

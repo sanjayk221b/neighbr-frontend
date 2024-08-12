@@ -32,12 +32,12 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
         >
           <Smile size={24} />
         </button>
-        {/* <input
+        <input
           type="file"
-          onChange={handleFileUpload}
+          // onChange={handleFileUpload}
           className="hidden"
           id="file-upload"
-        /> */}
+        />
         <label
           htmlFor="file-upload"
           className="mr-2 cursor-pointer text-gray-500 hover:text-gray-700"

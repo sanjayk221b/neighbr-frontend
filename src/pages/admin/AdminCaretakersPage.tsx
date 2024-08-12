@@ -1,6 +1,6 @@
-import AdminCaretakers from "../../components/admin/AdminCaretakers";
-import AdminNavbar from "../../components/admin/AdminNavbar";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminCaretakers from "../../components/admin/caretaker/AdminCaretakers";
+import AdminNavbar from "../../components/admin/navbar/AdminNavbar";
+import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 
 const AdminCaretakersPage = () => {
   return (

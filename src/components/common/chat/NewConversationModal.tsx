@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { getUsers } from "@/services/api/chat";
+import { RootState } from "@/redux/store";
+import { IParticipant } from "@/types";
+import { useSelector } from "react-redux";
 
 interface NewConversationModalProps {
   isOpen: boolean;
@@ -16,6 +19,9 @@ const NewConversationModal: React.FC<NewConversationModalProps> = ({
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
+  const residentInfo = useSelector(
+    (state: RootState) => state.auth.residentInfo
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -34,8 +40,10 @@ const NewConversationModal: React.FC<NewConversationModalProps> = ({
   const fetchUsers = async () => {
     try {
       const fetchedUsers = await getUsers();
-      console.log(fetchedUsers);
-      setUsers(fetchedUsers);
+      const filteredUsers = fetchedUsers.filter(
+        (user: IParticipant) => user._id !== residentInfo?._id
+      );
+      setUsers(filteredUsers);
     } catch (error) {
       console.error("Failed to fetch users:", error);
     }

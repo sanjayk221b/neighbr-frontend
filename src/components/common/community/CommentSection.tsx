@@ -24,7 +24,6 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
       try {
         const response = await getCommentsByPostId(postId);
         setComments(response.data);
-        console.log(response.data);
       } catch (err) {
         setError("Error fetching comments");
       } finally {
@@ -37,11 +36,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
 
   const handleCreateComment = async (postId: string, content: string) => {
     try {
-      await createComment(postId, content);
-      setComments((prevComments) => [
-        ...prevComments,
-        { postId, content, author: "You" },
-      ]);
+      const newComment = await createComment(postId, content);
+      setComments((prevComments) => [...prevComments, newComment.data]);
     } catch (error) {
       setError("Error creating comment");
     }

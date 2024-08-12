@@ -1,4 +1,4 @@
-import AdminLogin from "../../components/admin/AdminLogin";
+import AdminLogin from "../../components/admin/login/AdminLogin";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";

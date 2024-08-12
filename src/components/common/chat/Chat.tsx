@@ -16,6 +16,7 @@ import ShimmerConversation from "./shimmer/ShimmerConversation";
 import EmptyState from "./shimmer/ShimmerEmptyState";
 import { MessageSquare } from "lucide-react";
 import ShimmerMessage from "./shimmer/ShimmerMessage";
+import { toast } from "react-toastify";
 
 const Chat: React.FC = () => {
   const [conversations, setConversations] = useState<IConversation[]>([]);
@@ -23,7 +24,6 @@ const Chat: React.FC = () => {
     useState<IConversation | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const residentInfo = useSelector(
     (state: RootState) => state.auth.residentInfo
   );
@@ -39,15 +39,13 @@ const Chat: React.FC = () => {
         socket.off("newMessage", handleNewMessage);
       };
     }
-  }, [residentInfo, socket]);
+  }, [socket]);
 
   const fetchConversations = async (userId: string) => {
     try {
       setIsLoading(true);
       const conversationsData = await getConversations(userId);
       setConversations(conversationsData);
-    } catch (err) {
-      setError("Failed to fetch conversations");
     } finally {
       setIsLoading(false);
     }
@@ -71,21 +69,22 @@ const Chat: React.FC = () => {
         { _id: residentInfo._id, type: "resident" },
         { _id: otherUserId, type: "resident" },
       ];
-
       const newConversation = await createConversation(participants, false);
-      console.log(newConversation);
-      setConversations((prevConversations) => [
-        ...prevConversations,
-        newConversation,
-      ]);
-      setSelectedConversation(newConversation);
-      setMessages([]); // Clear previous messages
+      const conversationsData = await getConversations(residentInfo._id);
+      setConversations(conversationsData);
+
+      const updatedConversation = conversationsData.find(
+        (conv: IConversation) => conv._id === newConversation._id
+      );
+
+      setSelectedConversation(updatedConversation);
+      setMessages([]);
+
       if (socket) {
         socket.emit("joinConversation", newConversation._id);
       }
     } catch (error) {
-      console.error("Failed to create new conversation", error);
-      setError("Failed to create new conversation");
+      toast.error("Some error occurred");
     }
   };
 
@@ -94,7 +93,7 @@ const Chat: React.FC = () => {
   };
 
   const handleSendMessage = async (content: string) => {
-    if (selectedConversation && residentInfo) {
+    if (selectedConversation && residentInfo && residentInfo._id) {
       const message: Omit<IMessage, "_id" | "createdAt" | "updatedAt"> = {
         conversationId: selectedConversation._id,
         senderId: residentInfo._id,
@@ -103,11 +102,7 @@ const Chat: React.FC = () => {
       };
       try {
         const sentMessage = await sendMessage(message);
-        socket.emit("newMessage", {
-          ...message,
-          conversationId: selectedConversation._id,
-        });
-        handleNewMessage(sentMessage);
+        socket?.emit("newMessage", sentMessage);
       } catch (error) {
         console.error("Failed to send message", error);
       }
@@ -136,8 +131,6 @@ const Chat: React.FC = () => {
         </div>
         {isLoading ? (
           <ShimmerConversation count={5} />
-        ) : error ? (
-          <div className="p-4 text-red-500">{error}</div>
         ) : (
           <ConversationList
             conversations={conversations}
@@ -152,10 +145,7 @@ const Chat: React.FC = () => {
           <>
             <div className="h-16 bg-gray-50 border-b flex items-center px-4">
               <img
-                src={
-                  getOtherParticipant(selectedConversation)?.imageUrl ||
-                  "/path/to/default-avatar.png"
-                }
+                src={getOtherParticipant(selectedConversation)?.image}
                 alt="Avatar"
                 className="w-10 h-10 rounded-full mr-3"
               />

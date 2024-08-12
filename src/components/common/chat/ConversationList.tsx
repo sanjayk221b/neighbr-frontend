@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { IConversation, IUser } from "@/types";
+import { IConversation, IParticipant } from "@/types";
 import EmptyState from "./shimmer/ShimmerEmptyState";
 import { Search, MessageSquare, Plus } from "lucide-react";
 import NewConversationModal from "./NewConversationModal";
@@ -25,10 +25,15 @@ const ConversationList: React.FC<ConversationListProps> = ({
   onNewConversation,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isNewConversationModalOpen, setIsNewConversationModalOpen] = useState(false);
-  const residentInfo = useSelector((state: RootState) => state.auth.residentInfo);
+  const [isNewConversationModalOpen, setIsNewConversationModalOpen] =
+    useState(false);
+  const residentInfo = useSelector(
+    (state: RootState) => state.auth.residentInfo
+  );
 
-  const getOtherParticipant = (conversation: IConversation): IUser | undefined => {
+  const getOtherParticipant = (
+    conversation: IConversation
+  ): IParticipant | undefined => {
     return conversation.participants.find(
       (participant) => participant._id !== residentInfo?._id
     );
@@ -36,17 +41,24 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const filteredConversations = conversations.filter((conv) => {
     const otherParticipant = getOtherParticipant(conv);
-    return otherParticipant?.name?.toLowerCase().includes(searchTerm.toLowerCase());
+    return otherParticipant?.name
+      ?.toLowerCase()
+      .includes(searchTerm.toLowerCase());
   });
 
   const formatLastMessageTime = (timestamp: string) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);
     const now = new Date();
-    const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 3600 * 24));
+    const diffInDays = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 3600 * 24)
+    );
 
     if (diffInDays === 0) {
-      return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
     } else if (diffInDays === 1) {
       return "Yesterday";
     } else if (diffInDays < 7) {
@@ -93,25 +105,34 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 key={conversation._id}
                 onClick={() => onSelect(conversation)}
                 className={`flex items-center p-4 cursor-pointer hover:bg-gray-100 transition ${
-                  selectedConversation?._id === conversation._id ? "bg-blue-50" : ""
+                  selectedConversation?._id === conversation._id
+                    ? "bg-blue-50"
+                    : ""
                 }`}
               >
                 <img
-                  src={otherParticipant?.imageUrl || "/path/to/default-avatar.png"}
+                  src={otherParticipant?.image}
                   alt="Avatar"
                   className="w-12 h-12 rounded-full mr-4"
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-baseline">
-                    <h3 className="font-semibold truncate">{otherParticipant?.name}</h3>
-                    {conversation.lastMessage && (
+                    <h3 className="font-semibold truncate">
+                      {otherParticipant?.name}
+                    </h3>
+                    {conversation?.lastMessage && (
                       <span className="text-xs text-gray-500">
-                        {formatLastMessageTime(conversation.lastMessage.createdAt)}
+                        {formatLastMessageTime(
+                          conversation.lastMessage.createdAt
+                        )}
                       </span>
                     )}
                   </div>
                   <p className="text-sm text-gray-500 truncate">
-                    {truncateText(conversation.lastMessage?.content || "No messages yet", 30)}
+                    {truncateText(
+                      conversation.lastMessage?.content || "No messages yet",
+                      30
+                    )}
                   </p>
                 </div>
               </div>

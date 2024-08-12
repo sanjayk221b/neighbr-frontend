@@ -1,9 +1,9 @@
-
-
+// interfaces.ts
 export interface IParticipant {
-  id: string;
-  type: "resident" | "caretaker" | "admin";
-  name: string;
+  _id: string;
+  type: "resident" | "caretaker";
+  name?: string;
+  image?: string;
 }
 
 export interface IConversation {
@@ -18,12 +18,12 @@ export interface IConversation {
 }
 
 export interface IMessage {
-  id?: string;
+  _id?: string;
   senderId: string;
   senderType: "resident" | "caretaker" | "admin";
   content: string;
-  mediaType: "image" | "video" | "document" | "audio" | "none";
-  mediaUrl?: string;
+  // mediaType: "image" | "video" | "document" | "audio" | "none";
+  // mediaUrl?: string;
   conversationId: string;
   createdAt?: Date;
   updatedAt?: Date;

@@ -1,6 +1,6 @@
-import AdminNavbar from "../../components/admin/AdminNavbar";
-import AdminOwners from "../../components/admin/AdminResidents";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminNavbar from "../../components/admin/navbar/AdminNavbar";
+import AdminOwners from "../../components/admin/resident/AdminResidents";
+import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 
 const AdminResidentsPage = () => {
   return (

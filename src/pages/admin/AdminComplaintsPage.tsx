@@ -1,6 +1,6 @@
-import AdminComplaints from "@/components/admin/AdminComplaints";
-import AdminNavbar from "../../components/admin/AdminNavbar";
-import AdminSidebar from "../../components/admin/AdminSidebar";
+import AdminComplaints from "@/components/admin/complaints/AdminComplaints";
+import AdminNavbar from "../../components/admin/navbar/AdminNavbar";
+import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 
 const AdminComplaintsPage = () => {
   return (
