@@ -31,6 +31,19 @@
     --chart-5: 27 87% 67%;
   }
 
+  .light {
+    --card-bg: #ffffff; /* Light background for cards */
+    --text-color: #000000; /* Light text color */
+    --muted-bg: #f0f0f0; /* Light muted background */
+    --muted-text: #555555; /* Light muted text */
+    --border-color: #e0e0e0; /* Light border color */
+    --hover-bg: #e0e0e0; /* Light hover background */
+    --success-bg: #d4f5e3; /* Light success background */
+    --success-text: #2e8b57; /* Light success text */
+    --error-bg: #f5d4d4; /* Light error background */
+    --error-text: #a33a3a; /* Light error text */
+  }
+
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
