@@ -1,21 +1,15 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { sidebarItems } from "@/constants/admin/sidebarItems";
 
 const AdminSidebar: React.FC = () => {
   const location = useLocation();
-
-  const navItems = [
-    { path: "/admin/dashboard", label: "Dashboard" },
-    { path: "/admin/owners", label: "Residents" },
-    { path: "/admin/caretakers", label: "Caretakers" },
-    { path: "/admin/complaints", label: "Complaints" },
-  ];
 
   return (
     <div className="w-64 h-full bg-background border-r">
       <nav className="p-4 pt-16">
         <ul className="space-y-5">
-          {navItems.map((item) => (
+          {sidebarItems.map((item) => (
             <li key={item.path}>
               <Link
                 to={item.path}

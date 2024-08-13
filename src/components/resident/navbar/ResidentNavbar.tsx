@@ -6,7 +6,7 @@ import { residentLogout } from "../../../services/api/resident";
 import { RootState } from "../../../redux/store";
 import { FaEnvelope } from "react-icons/fa";
 import { Menu, X, LogOut, User } from "lucide-react";
-import { navItems } from "@/constants/navItems";
+import { navItems } from "@/constants/resident/navItems";
 
 const ResidentNavbar = () => {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
