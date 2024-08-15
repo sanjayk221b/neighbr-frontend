@@ -9,7 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 
 const CaretakerRotues = () => {
   return (
-    // <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Routes>
         <Route path="/" element={<CaretakerLoginPage />} />
         <Route element={<CaretakerProtectedRoute />}>
@@ -19,7 +19,7 @@ const CaretakerRotues = () => {
           <Route path="/complaints" element={<CaretakerComplaintsPage />} />
         </Route>
       </Routes>
-    // </ThemeProvider>
+    </ThemeProvider>
   );
 };
 

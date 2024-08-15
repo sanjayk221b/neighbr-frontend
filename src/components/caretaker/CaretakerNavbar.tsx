@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setCaretakerLogout } from "../../redux/slices/authSlice";
 import { caretakerLogout } from "../../services/api/caretaker";
+import { ModeToggle } from "../mode-toggle";
 
 const CaretakerNavbar = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const CaretakerNavbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-md">
+    <nav className="border-b shadow-md">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0 pl-4">
@@ -23,9 +24,10 @@ const CaretakerNavbar = () => {
               />
             </div>
           </div>
-          <div className="pr-4">
+          <div className="flex items-center space-x-4 pr-4">
+            <ModeToggle />
             <button
-              className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-md transition duration-300 shadow-sm"
+              className="py-2 px-4 rounded-md transition duration-300 shadow-sm"
               onClick={handleLogout}
             >
               Logout

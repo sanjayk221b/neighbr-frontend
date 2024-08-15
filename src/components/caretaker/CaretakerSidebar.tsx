@@ -5,19 +5,18 @@ import { sidebarItems } from "@/constants/caretaker/sidebarItems";
 const CaretakerSidebar: React.FC = () => {
   const location = useLocation();
 
-
   return (
-    <div className="font-medium text-xl pt-16 bg-gray-800 text-white w-64 min-h-screen p-4">
-      <nav>
+    <div className="w-64 h-full bg-background border-r">
+      <nav className="p-4 pt-16">
         <ul className="space-y-5">
           {sidebarItems.map((item) => (
             <li key={item.path}>
               <Link
                 to={item.path}
-                className={`block py-2 px-4 rounded transition duration-200 ${
+                className={`block py-2 px-4 rounded-lg transition duration-200 text-xl font-medium ${
                   location.pathname === item.path
-                    ? "bg-gray-600 text-white"
-                    : "hover:bg-gray-700"
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                 }`}
               >
                 {item.label}

@@ -7,6 +7,7 @@ import AdminCaretakersPage from "../pages/admin/AdminCaretakersPage";
 import { ThemeProvider } from "@/components/theme-provider";
 import AdminComplaintsPage from "@/pages/admin/AdminComplaintsPage";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import AdminWorkersPage from "@/pages/admin/AdminWorkersPage";
 
 const AdminRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const AdminRoutes = () => {
             <Route path="/dashboard" element={<AdminDashboardPage />} />
             <Route path="/caretakers" element={<AdminCaretakersPage />} />
             <Route path="/owners" element={<AdminOwnersPage />} />
+            <Route path="/workers" element={<AdminWorkersPage />} />
             <Route path="/complaints" element={<AdminComplaintsPage />} />
           </Route>
         </Routes>

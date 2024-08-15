@@ -8,7 +8,6 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
@@ -153,11 +152,18 @@ const AdminComplaints: React.FC = () => {
                   {new Date(complaint.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
-                  <Badge
-                    variant={complaint.isResolved ? "success" : "destructive"}
-                  >
+                  {/* <Badge variant={complaint.isResolved ? "" : "destructive"}>
                     {complaint.isResolved ? "Resolved" : "Unresolved"}
-                  </Badge>
+                  </Badge> */}
+                  <span
+                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      !complaint.isResolved
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {!complaint.isResolved ? "Resolved" : "Unresolved"}
+                  </span>
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap text-sm font-medium">
                   <DropdownMenu>
