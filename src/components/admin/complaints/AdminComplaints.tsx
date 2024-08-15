@@ -152,9 +152,6 @@ const AdminComplaints: React.FC = () => {
                   {new Date(complaint.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-4 whitespace-nowrap">
-                  {/* <Badge variant={complaint.isResolved ? "" : "destructive"}>
-                    {complaint.isResolved ? "Resolved" : "Unresolved"}
-                  </Badge> */}
                   <span
                     className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
                       !complaint.isResolved

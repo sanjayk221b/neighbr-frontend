@@ -8,7 +8,7 @@ const CaretakerVisitorsPage = () => {
       <CaretakerNavbar />
       <div className="flex flex-1 overflow-hidden">
         <CaretakerSidebar />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto ">
           <CaretakerVisitors />
         </main>
       </div>
