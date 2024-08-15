@@ -6,7 +6,7 @@ export const useSocket = () => {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const socketInstance = io("http://localhost:4003", {
+    const socketInstance = io(import.meta.env.VITE_SOCKET_URL, {
       reconnectionAttempts: 5,
       reconnectionDelay: 1000,
     });

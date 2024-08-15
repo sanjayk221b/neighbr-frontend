@@ -1,15 +1,9 @@
-import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import axiosInstance from "@/config/axiosConfig";
 import residentRoutes from "../endpoints/residentEndPoints";
-
-const residentApi = axios.create({
-  baseURL: `${BASE_URL}/`,
-  withCredentials: true,
-});
 
 export const residentLogin = async (email: string, password: string) => {
   try {
-    const response = await residentApi.post(residentRoutes.residentLogin, {
+    const response = await axiosInstance.post(residentRoutes.residentLogin, {
       email,
       password,
     });
@@ -21,7 +15,7 @@ export const residentLogin = async (email: string, password: string) => {
 
 export const residentLogout = async () => {
   try {
-    const response = await residentApi.post(residentRoutes.residentLogout);
+    const response = await axiosInstance.post(residentRoutes.residentLogout);
     return response.data;
   } catch (error) {
     throw error;
@@ -30,7 +24,7 @@ export const residentLogout = async () => {
 
 export const addVisitor = async (visitorData: FormData) => {
   try {
-    const response = await residentApi.post(
+    const response = await axiosInstance.post(
       residentRoutes.addVisitor,
       visitorData
     );
@@ -42,7 +36,7 @@ export const addVisitor = async (visitorData: FormData) => {
 
 export const getVisitors = async () => {
   try {
-    const response = await residentApi.get(residentRoutes.getVisitors);
+    const response = await axiosInstance.get(residentRoutes.getVisitors);
     return response.data;
   } catch (error) {
     throw error;
@@ -51,7 +45,7 @@ export const getVisitors = async () => {
 
 export const addServiceRequest = async (serviceData: FormData) => {
   try {
-    const response = await residentApi.post(
+    const response = await axiosInstance.post(
       residentRoutes.addServiceRequest,
       serviceData
     );
@@ -63,7 +57,7 @@ export const addServiceRequest = async (serviceData: FormData) => {
 
 export const getServiceRequests = async () => {
   try {
-    const response = await residentApi.get(residentRoutes.getServiceRequests);
+    const response = await axiosInstance.get(residentRoutes.getServiceRequests);
     return response.data;
   } catch (error) {
     throw error;
@@ -72,7 +66,7 @@ export const getServiceRequests = async () => {
 
 export const addComplaint = async (complaintData: FormData) => {
   try {
-    const response = await residentApi.post(
+    const response = await axiosInstance.post(
       residentRoutes.addComplaint,
       complaintData
     );
@@ -84,7 +78,7 @@ export const addComplaint = async (complaintData: FormData) => {
 
 export const getComplaints = async () => {
   try {
-    const response = await residentApi.get(residentRoutes.getComplaints);
+    const response = await axiosInstance.get(residentRoutes.getComplaints);
     return response.data;
   } catch (error) {
     throw error;
@@ -97,7 +91,7 @@ export const changePassword = async (
   newPassword: string
 ) => {
   try {
-    const response = await residentApi.put(residentRoutes.changePassword, {
+    const response = await axiosInstance.put(residentRoutes.changePassword, {
       email,
       currentPassword,
       newPassword,

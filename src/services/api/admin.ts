@@ -1,11 +1,5 @@
-import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import axiosInstance from "@/config/axiosConfig";
 import adminRoutes from "../endpoints/adminEndPoints";
-
-const adminApi = axios.create({
-  baseURL: `${BASE_URL}/`,
-  withCredentials: true,
-});
 
 interface ResidentData {
   name: string;
@@ -28,7 +22,7 @@ interface CaretakerData {
 
 export const adminLogin = async (email: string, password: string) => {
   try {
-    const response = await adminApi.post(adminRoutes.adminLogin, {
+    const response = await axiosInstance.post(adminRoutes.adminLogin, {
       email,
       password,
     });
@@ -40,7 +34,7 @@ export const adminLogin = async (email: string, password: string) => {
 
 export const adminLogout = async () => {
   try {
-    const response = await adminApi.post(adminRoutes.adminLogout);
+    const response = await axiosInstance.post(adminRoutes.adminLogout);
     return response.data;
   } catch (error) {
     throw error;
@@ -49,7 +43,7 @@ export const adminLogout = async () => {
 
 export const addResident = async (residentData: ResidentData) => {
   try {
-    const response = await adminApi.post(
+    const response = await axiosInstance.post(
       adminRoutes.addResident,
       residentData,
       {
@@ -66,7 +60,7 @@ export const addResident = async (residentData: ResidentData) => {
 
 export const blockUnblockResident = async (residentId: string) => {
   try {
-    const response = await adminApi.put(
+    const response = await axiosInstance.put(
       adminRoutes.blockUnblockResident.replace(":id", residentId)
     );
     return response.data;
@@ -77,7 +71,7 @@ export const blockUnblockResident = async (residentId: string) => {
 
 export const getResidents = async () => {
   try {
-    const response = await adminApi.get(adminRoutes.getResidents);
+    const response = await axiosInstance.get(adminRoutes.getResidents);
     return response.data;
   } catch (error) {
     throw error;
@@ -86,7 +80,7 @@ export const getResidents = async () => {
 
 export const addCaretaker = async (caretakerData: CaretakerData) => {
   try {
-    const response = await adminApi.post(
+    const response = await axiosInstance.post(
       adminRoutes.addCaretaker,
       caretakerData
     );
@@ -98,7 +92,7 @@ export const addCaretaker = async (caretakerData: CaretakerData) => {
 
 export const getCaretakers = async () => {
   try {
-    const response = await adminApi.get(adminRoutes.getCaretakers);
+    const response = await axiosInstance.get(adminRoutes.getCaretakers);
     return response.data;
   } catch (error) {
     throw error;
@@ -107,7 +101,7 @@ export const getCaretakers = async () => {
 
 export const blockUnblockCaretaker = async (caretakerId: string) => {
   try {
-    const response = await adminApi.put(
+    const response = await axiosInstance.put(
       adminRoutes.blockUnblockCaretaker.replace(":id", caretakerId)
     );
     return response.data;
@@ -118,7 +112,7 @@ export const blockUnblockCaretaker = async (caretakerId: string) => {
 
 export const getAllComplaints = async () => {
   try {
-    const response = await adminApi.get(adminRoutes.getAllComplaints);
+    const response = await axiosInstance.get(adminRoutes.getAllComplaints);
     return response.data;
   } catch (error) {
     throw error;

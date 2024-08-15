@@ -1,16 +1,10 @@
-import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import axiosInstance from "@/config/axiosConfig";
 import caretakerRoutes from "../endpoints/caretakerEndPoints";
 import { IVisitor, IComplaint, IService } from "../../types";
 
-const caretakerApi = axios.create({
-  baseURL: `${BASE_URL}/`,
-  withCredentials: true,
-});
-
 export const caretakerLogin = async (email: string, password: string) => {
   try {
-    const response = await caretakerApi.post(caretakerRoutes.caretakerLogin, {
+    const response = await axiosInstance.post(caretakerRoutes.caretakerLogin, {
       email,
       password,
     });
@@ -22,7 +16,7 @@ export const caretakerLogin = async (email: string, password: string) => {
 
 export const caretakerLogout = async () => {
   try {
-    const response = await caretakerApi.post(caretakerRoutes.caretakerLogout);
+    const response = await axiosInstance.post(caretakerRoutes.caretakerLogout);
     return response.data;
   } catch (error) {
     throw error;
@@ -31,7 +25,7 @@ export const caretakerLogout = async () => {
 
 export const getVisitors = async () => {
   try {
-    const response = await caretakerApi.get(caretakerRoutes.getVisitors);
+    const response = await axiosInstance.get(caretakerRoutes.getVisitors);
     return response.data;
   } catch (error) {
     throw error;
@@ -40,7 +34,7 @@ export const getVisitors = async () => {
 
 export const updateVisitor = async (id: string, visitorData: IVisitor) => {
   try {
-    const response = await caretakerApi.post(
+    const response = await axiosInstance.post(
       `${caretakerRoutes.updateVisitor}${id}/update`,
       visitorData
     );
@@ -52,7 +46,7 @@ export const updateVisitor = async (id: string, visitorData: IVisitor) => {
 
 export const getAllComplaints = async () => {
   try {
-    const response = await caretakerApi.get(caretakerRoutes.getAllComplaints);
+    const response = await axiosInstance.get(caretakerRoutes.getAllComplaints);
     return response.data;
   } catch (error) {
     throw error;
@@ -64,7 +58,7 @@ export const updateComplaint = async (
   complaintData: IComplaint
 ) => {
   try {
-    const response = await caretakerApi.put(caretakerRoutes.updateComplaint, {
+    const response = await axiosInstance.put(caretakerRoutes.updateComplaint, {
       id: complaintId,
       data: complaintData,
     });
@@ -76,7 +70,7 @@ export const updateComplaint = async (
 
 export const getAllServiceRequests = async () => {
   try {
-    const response = await caretakerApi.get(
+    const response = await axiosInstance.get(
       caretakerRoutes.getAllServiceRequests
     );
     return response.data;
@@ -86,12 +80,12 @@ export const getAllServiceRequests = async () => {
 };
 
 export const updateServiceRequests = async (
-  serviceId: string ,
+  serviceId: string,
   updateData: IService
 ) => {
   try {
-    const response = await caretakerApi.put(
-      `${caretakerRoutes.updateServiceRequests.replace(':id', serviceId)}`,
+    const response = await axiosInstance.put(
+      `${caretakerRoutes.updateServiceRequests.replace(":id", serviceId)}`,
       updateData
     );
     return response.data;

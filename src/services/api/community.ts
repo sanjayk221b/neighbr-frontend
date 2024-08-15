@@ -1,15 +1,9 @@
-import axios from "axios";
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import axiosInstance from "@/config/axiosConfig";
 import communityRoutes from "../endpoints/community";
-
-const communityApi = axios.create({
-  baseURL: `${BASE_URL}/`,
-  withCredentials: true,
-});
 
 export const createPost = async (formData: FormData) => {
   try {
-    const response = await communityApi.post(
+    const response = await axiosInstance.post(
       communityRoutes.createPost,
       formData,
       {
@@ -27,7 +21,7 @@ export const createPost = async (formData: FormData) => {
 
 export const getPosts = async () => {
   try {
-    const response = await communityApi.get(communityRoutes.getPosts);
+    const response = await axiosInstance.get(communityRoutes.getPosts);
     return response.data;
   } catch (error) {
     console.error("Error creating post:", error);
@@ -38,7 +32,7 @@ export const getPosts = async () => {
 export const createComment = async (postId: string, content: string) => {
   try {
     const url = communityRoutes.createComment.replace(":postId", postId);
-    const response = await communityApi.post(url, { content });
+    const response = await axiosInstance.post(url, { content });
     return response.data;
   } catch (error) {
     console.error("Error creating comment:", error);
@@ -48,7 +42,7 @@ export const createComment = async (postId: string, content: string) => {
 
 export const getCommentsByPostId = async (postId: string) => {
   try {
-    const response = await communityApi.get(
+    const response = await axiosInstance.get(
       communityRoutes.getCommentsByPostId.replace(":postId", postId)
     );
     return response.data;
