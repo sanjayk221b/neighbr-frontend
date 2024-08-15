@@ -45,12 +45,7 @@ export const addResident = async (residentData: ResidentData) => {
   try {
     const response = await axiosInstance.post(
       adminRoutes.addResident,
-      residentData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      residentData
     );
     return response.data;
   } catch (error) {

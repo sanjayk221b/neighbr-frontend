@@ -5,12 +5,7 @@ export const createPost = async (formData: FormData) => {
   try {
     const response = await axiosInstance.post(
       communityRoutes.createPost,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
+      formData
     );
     return response.data;
   } catch (error) {
