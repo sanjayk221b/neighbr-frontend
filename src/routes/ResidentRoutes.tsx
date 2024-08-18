@@ -1,26 +1,31 @@
 import { Route, Routes } from "react-router-dom";
-import ResidentLoginPage from "../pages/resident/ResidentLoginPage";
-import ResidentHomePage from "../pages/resident/ResidentHomePage";
-import ResidentVisitorsPage from "../pages/resident/ResidentVisitorsPage";
-import ResidentServicesPage from "../pages/resident/ResidentServicesPage";
-import ResidentComplaintsPage from "../pages/resident/ResidentComplaintsPage";
-import ResidentProfilePage from "../pages/resident/ResidentProfilePage";
-import ResidentChatPage from "../pages/resident/ResidentChatPage";
-import ResidentCommunityPage from "@/pages/resident/ResidentCommunityPage";
+import { Suspense, lazy } from "react";
 import ResidentProtect from "@/components/hoc/ResidentProtect";
+import { NLoader } from "@/components/ui/loader";
+
+const ResidentLoginPage = lazy(() => import("../pages/resident/ResidentLoginPage"));
+const ResidentHomePage = lazy(() => import("../pages/resident/ResidentHomePage"));
+const ResidentVisitorsPage = lazy(() => import("../pages/resident/ResidentVisitorsPage"));
+const ResidentServicesPage = lazy(() => import("../pages/resident/ResidentServicesPage"));
+const ResidentComplaintsPage = lazy(() => import("../pages/resident/ResidentComplaintsPage"));
+const ResidentProfilePage = lazy(() => import("../pages/resident/ResidentProfilePage"));
+const ResidentChatPage = lazy(() => import("../pages/resident/ResidentChatPage"));
+const ResidentCommunityPage = lazy(() => import("../pages/resident/ResidentCommunityPage"));
 
 const ResidentRoutes = () => {
   return (
-    <Routes>
-      <Route path="/" element={<ResidentLoginPage />} />
-      <Route path="/home" element={ResidentProtect(ResidentHomePage)} />
-      <Route path="/visitors" element={ResidentProtect(ResidentVisitorsPage)} />
-      <Route path="/services" element={ResidentProtect(ResidentServicesPage)} />
-      <Route path="/complaints" element={ResidentProtect(ResidentComplaintsPage)} />
-      <Route path="/profile" element={ResidentProtect(ResidentProfilePage)} />
-      <Route path="/chats" element={ResidentProtect(ResidentChatPage)} />
-      <Route path="/community" element={ResidentProtect(ResidentCommunityPage)} />
-    </Routes>
+    <Suspense fallback={<NLoader />}>
+      <Routes>
+        <Route path="/" element={<ResidentLoginPage />} />
+        <Route path="/home" element={ResidentProtect(ResidentHomePage)} />
+        <Route path="/visitors" element={ResidentProtect(ResidentVisitorsPage)} />
+        <Route path="/services" element={ResidentProtect(ResidentServicesPage)} />
+        <Route path="/complaints" element={ResidentProtect(ResidentComplaintsPage)} />
+        <Route path="/profile" element={ResidentProtect(ResidentProfilePage)} />
+        <Route path="/chats" element={ResidentProtect(ResidentChatPage)} />
+        <Route path="/community" element={ResidentProtect(ResidentCommunityPage)} />
+      </Routes>
+    </Suspense>
   );
 };
 

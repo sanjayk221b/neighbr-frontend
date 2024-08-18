@@ -12,7 +12,7 @@ const initialState: AuthState = {
   adminLoggedIn: localStorage.getItem("adminLoggedIn") ? true : false,
   residentLoggedIn: localStorage.getItem("residentLoggedIn") ? true : false,
   caretakerLoggedIn: localStorage.getItem("caretakerLoggedIn") ? true : false,
-  residentInfo: localStorage.getItem("residentInfo") ? JSON.parse(localStorage.getItem("residentInfo")) : null,
+  residentInfo: JSON.parse(localStorage.getItem("residentInfo") ?? "null"),
 };
 
 const authSlice = createSlice({

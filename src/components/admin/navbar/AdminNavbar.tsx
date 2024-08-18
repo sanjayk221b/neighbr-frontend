@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setAdminLogout } from "../../../redux/slices/authSlice";
 import { adminLogout } from "../../../services/api/admin";
-import { ModeToggle } from "../../mode-toggle";
+import { ModeToggle } from "../../ui/theme/mode-toggle";
 import { Button } from "../../ui/button";
 
 const AdminNavbar = () => {

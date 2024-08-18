@@ -19,25 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal, Search } from "lucide-react";
 
-import IResident from "@/types/resident";
 import { updateComplaint } from "@/services/api/caretaker";
 import { getAllComplaints } from "@/services/api/admin";
-
-interface IComplaint {
-  _id: string;
-  title: string;
-  description: string;
-  residentId: IResident;
-  isResolved: boolean;
-  image: string;
-  createdAt: string;
-}
+import { PopulatedComplaint } from "@/types";
 
 const AdminComplaints: React.FC = () => {
-  const [complaints, setComplaints] = useState<IComplaint[]>([]);
-  const [selectedComplaint, setSelectedComplaint] = useState<IComplaint | null>(
-    null
-  );
+  const [complaints, setComplaints] = useState<PopulatedComplaint[]>([]);
+  const [selectedComplaint, setSelectedComplaint] = useState<PopulatedComplaint | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
@@ -59,7 +47,7 @@ const AdminComplaints: React.FC = () => {
     }
   };
 
-  const handleViewClick = (complaint: IComplaint) => {
+  const handleViewClick = (complaint: PopulatedComplaint) => {
     setSelectedComplaint(complaint);
   };
 

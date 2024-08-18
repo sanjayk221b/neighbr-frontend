@@ -41,9 +41,14 @@ const formSchema = z.object({
 interface AddWorkerModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onWorkerAdded: () => void;
 }
 
-const AddWorkerModal: React.FC<AddWorkerModalProps> = ({ isOpen, onClose }) => {
+const AddWorkerModal: React.FC<AddWorkerModalProps> = ({
+  isOpen,
+  onClose,
+  onWorkerAdded,
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -67,7 +72,7 @@ const AddWorkerModal: React.FC<AddWorkerModalProps> = ({ isOpen, onClose }) => {
 
       await createWorker(formData);
       form.reset();
-      onClose();
+      onWorkerAdded();
     } catch (error) {
       console.error("Failed to create worker:", error);
     }

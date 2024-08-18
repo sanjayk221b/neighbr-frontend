@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setCaretakerLogout } from "../../redux/slices/authSlice";
 import { caretakerLogout } from "../../services/api/caretaker";
-import { ModeToggle } from "../mode-toggle";
+import { ModeToggle } from "../ui/theme/mode-toggle";
 
 const CaretakerNavbar = () => {
   const dispatch = useDispatch();
