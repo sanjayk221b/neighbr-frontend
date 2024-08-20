@@ -9,6 +9,7 @@ const CaretakerHomePage = lazy(() => import("../pages/caretaker/CaretakerHomePag
 const CaretakerVisitorsPage = lazy(() => import("../pages/caretaker/CaretakerVisitorsPage"));
 const CaretakerServicesPage = lazy(() => import("../pages/caretaker/CaretakerServicesPage"));
 const CaretakerComplaintsPage = lazy(() => import("../pages/caretaker/CaretakerComplaintsPage"));
+const CaretakerWorkersPage = lazy(() => import("../pages/caretaker/CaretakerWorkersPage"))
 
 const CaretakerRoutes = () => {
   return (
@@ -18,6 +19,7 @@ const CaretakerRoutes = () => {
           <Route path="/" element={<CaretakerLoginPage />} />
           <Route path="/home" element={CaretakerProtect(CaretakerHomePage)} />
           <Route path="/visitors" element={CaretakerProtect(CaretakerVisitorsPage)} />
+          <Route path="/workers" element={CaretakerProtect(CaretakerWorkersPage)} />
           <Route path="/maintenance" element={CaretakerProtect(CaretakerServicesPage)} />
           <Route path="/complaints" element={CaretakerProtect(CaretakerComplaintsPage)} />
         </Routes>

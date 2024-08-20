@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  getAllComplaints,
-  updateComplaint,
-} from "../../../services/api/caretaker";
+import { getAllComplaints, updateComplaint } from "../../../services/api/caretaker";
 import Swal from "sweetalert2";
 import IResident from "../../../types/resident";
 
@@ -18,9 +15,7 @@ interface IComplaint {
 
 const CaretakerComplaints: React.FC = () => {
   const [complaints, setComplaints] = useState<IComplaint[]>([]);
-  const [selectedComplaint, setSelectedComplaint] = useState<IComplaint | null>(
-    null
-  );
+  const [selectedComplaint, setSelectedComplaint] = useState<IComplaint | null>(null);
 
   useEffect(() => {
     fetchComplaints();
@@ -50,8 +45,6 @@ const CaretakerComplaints: React.FC = () => {
         text: "You're about to save changes to this complaint.",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
         confirmButtonText: "Yes, save it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -61,11 +54,7 @@ const CaretakerComplaints: React.FC = () => {
             Swal.fire("Saved!", "The complaint has been updated.", "success");
           } catch (error) {
             console.error("Error updating complaint:", error);
-            Swal.fire(
-              "Error!",
-              "There was a problem updating the complaint.",
-              "error"
-            );
+            Swal.fire("Error!", "There was a problem updating the complaint.", "error");
           }
         }
       });
@@ -84,64 +73,45 @@ const CaretakerComplaints: React.FC = () => {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800 animate-fade-in-down">
-          All Complaints
-        </h1>
+        <h1 className="text-3xl font-bold">All Complaints</h1>
       </div>
 
-      <div className="overflow-x-auto bg-white shadow-xl rounded-lg animate-fade-in-up">
+      <div className="overflow-x-auto bg-card shadow-md rounded-lg">
         <table className="min-w-full table-auto">
-          <thead className="bg-gradient-to-r from-gray-200 to-gray-300">
+          <thead className="bg-muted">
             <tr>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Title
               </th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Description
               </th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Date
               </th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Status
               </th>
-              <th className="px-6 py-4 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {complaints.map((complaint, index) => (
-              <tr
-                key={complaint._id}
-                className="hover:bg-gray-50 transition-colors duration-200 ease-in-out animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {complaint.title}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {complaint.description.substring(0, 50)}...
-                </td>
+          <tbody className="divide-y">
+            {complaints.map((complaint) => (
+              <tr key={complaint._id} className="hover:bg-accent">
+                <td className="px-6 py-4 whitespace-nowrap">{complaint.title}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{complaint.description.substring(0, 50)}...</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {new Date(complaint.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      complaint.isResolved
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    } transition-all duration-300 ease-in-out transform hover:scale-105`}
-                  >
+                  <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${complaint.isResolved ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"}`}>
                     {complaint.isResolved ? "Resolved" : "Unresolved"}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <button
-                    onClick={() => handleViewClick(complaint)}
-                    className="text-indigo-600 hover:text-indigo-900 transition-colors duration-200 ease-in-out transform hover:scale-110"
-                  >
+                  <button onClick={() => handleViewClick(complaint)} className="text-primary hover:underline">
                     View/Edit
                   </button>
                 </td>
