@@ -7,6 +7,7 @@ interface BaseComplaint {
   isResolved: boolean;
   image: string;
   createdAt: string;
+  recipientType: "caretaker" | "admin";
 }
 
 export interface CreateComplaint extends BaseComplaint {
