@@ -1,4 +1,4 @@
-import CaretakerLogin from "../../components/caretaker/CaretakerLogin";
+import CaretakerLogin from "../../components/caretaker/login/CaretakerLogin";
 import { RootState } from "../../redux/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";

@@ -1,6 +1,6 @@
 import CaretakerDashboard from "../../components/caretaker/CaretakerDashboard";
-import CaretakerNavbar from "../../components/caretaker/CaretakerNavbar";
-import CaretakerSidebar from "../../components/caretaker/CaretakerSidebar";
+import CaretakerNavbar from "../../components/caretaker/navbar/CaretakerNavbar";
+import CaretakerSidebar from "../../components/caretaker/sidebar/CaretakerSidebar";
 
 const CaretakerHomePage = () => {
   return (

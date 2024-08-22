@@ -1,5 +1,5 @@
-import CaretakerSidebar from "../../components/caretaker/CaretakerSidebar";
-import CaretakerNavbar from "../../components/caretaker/CaretakerNavbar";
+import CaretakerSidebar from "../../components/caretaker/sidebar/CaretakerSidebar";
+import CaretakerNavbar from "../../components/caretaker/navbar/CaretakerNavbar";
 import CaretakerVisitors from "../../components/caretaker/visitor/CaretakerVisitors";
 
 const CaretakerVisitorsPage = () => {

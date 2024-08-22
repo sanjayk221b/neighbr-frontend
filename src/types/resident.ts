@@ -1,4 +1,4 @@
-export default interface IResident {
+export  interface IResident {
   _id?: string;
   name: string;
   email: string;

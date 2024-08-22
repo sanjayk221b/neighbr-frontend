@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import IResident from "../../types/resident";
+import { ICaretaker, IResident } from "@/types";
 
 interface AuthState {
   adminLoggedIn: boolean;
   residentLoggedIn: boolean;
   caretakerLoggedIn: boolean;
   residentInfo: Partial<IResident> | null;
+  caretakerInfo: Partial<ICaretaker> | null;
 }
 
 const initialState: AuthState = {
@@ -13,6 +14,7 @@ const initialState: AuthState = {
   residentLoggedIn: localStorage.getItem("residentLoggedIn") ? true : false,
   caretakerLoggedIn: localStorage.getItem("caretakerLoggedIn") ? true : false,
   residentInfo: JSON.parse(localStorage.getItem("residentInfo") ?? "null"),
+  caretakerInfo: JSON.parse(localStorage.getItem("caretakerInfo") ?? "null"),
 };
 
 const authSlice = createSlice({
@@ -39,13 +41,17 @@ const authSlice = createSlice({
       localStorage.removeItem("residentInfo");
       state.residentInfo = null;
     },
-    setCaretakerLogin: (state) => {
+    setCaretakerLogin: (state, action) => {
       state.caretakerLoggedIn = true;
       localStorage.setItem("caretakerLoggedIn", "true");
+      state.caretakerInfo = action.payload;
+      localStorage.setItem("caretakerInfo", JSON.stringify(action.payload));
     },
     setCaretakerLogout: (state) => {
       state.caretakerLoggedIn = false;
       localStorage.removeItem("caretakerLoggedIn");
+      localStorage.removeItem("caretakerInfo");
+      state.caretakerInfo = null;
     },
   },
 });

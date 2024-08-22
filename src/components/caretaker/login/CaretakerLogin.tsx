@@ -1,8 +1,8 @@
 import { useState, FormEvent } from "react";
-import { caretakerLogin } from "../../services/api/caretaker";
+import { caretakerLogin } from "../../../services/api/caretaker";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { setCaretakerLogin } from "../../redux/slices/authSlice";
+import { setCaretakerLogin } from "../../../redux/slices/authSlice";
 
 const CaretakerLogin = () => {
   const [username, setUsername] = useState("");
@@ -18,18 +18,14 @@ const CaretakerLogin = () => {
       setError("Please enter both username and password");
       return;
     }
-    try {
-      const token = await caretakerLogin(username, password);
-      if (token) {
-        console.log("Login successful:", token);
-        dispatch(setCaretakerLogin());
-        navigate("/caretaker/home");
-      } else {
-        setError("Invalid username or password");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("Error during login. Please try again later.");
+
+    const res = await caretakerLogin(username, password);
+
+    if (res.success) {
+      dispatch(setCaretakerLogin(res.data.caretaker));
+      navigate("/caretaker/home");
+    } else {
+      setError("Invalid username or password");
     }
   };
 
