@@ -1,4 +1,4 @@
-import CaretakerDashboard from "../../components/caretaker/CaretakerDashboard";
+import CaretakerDashboard from "../../components/caretaker/dashboard/CaretakerDashboard";
 import CaretakerNavbar from "../../components/caretaker/navbar/CaretakerNavbar";
 import CaretakerSidebar from "../../components/caretaker/sidebar/CaretakerSidebar";
 

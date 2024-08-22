@@ -69,7 +69,7 @@ const CaretakerNavbar = () => {
                   <Button
                     variant="ghost"
                     className="w-full text-left"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate("/caretaker/profile")}
                   >
                     <User className="mr-2" size={18} />
                     Profile
@@ -113,7 +113,7 @@ const CaretakerNavbar = () => {
             <Button
               variant="ghost"
               className="w-full text-left"
-              onClick={() => navigate("/profile")}
+              onClick={() => navigate("/caretaker/profile")}
             >
               <User className="mr-2" size={18} />
               Profile

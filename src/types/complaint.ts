@@ -1,4 +1,4 @@
-import IResident from "./resident";
+import { IResident } from "./resident";
 
 interface BaseComplaint {
   _id: string;

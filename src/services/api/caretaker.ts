@@ -23,6 +23,23 @@ export const caretakerLogout = async () => {
   }
 };
 
+export const changePassword = async (
+  email: string,
+  currentPassword: string,
+  newPassword: string
+) => {
+  try {
+    const response = await axiosInstance.put(caretakerRoutes.changePassword, {
+      email,
+      currentPassword,
+      newPassword,
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getVisitors = async () => {
   try {
     const response = await axiosInstance.get(caretakerRoutes.getVisitors);
