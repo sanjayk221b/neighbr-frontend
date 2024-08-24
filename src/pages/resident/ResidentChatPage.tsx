@@ -3,7 +3,7 @@ import Chat from "@/components/common/chat/Chat";
 
 const ResidentChatPage = () => {
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-100 to-blue-200">
       <ResidentNavbar />
       <div className="flex-1 overflow-hidden p-4">
         <Chat />
