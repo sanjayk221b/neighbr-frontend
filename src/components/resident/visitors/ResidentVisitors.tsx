@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  FaPlus,
-  FaMinus,
-  FaEnvelope,
-  FaPhone,
-  FaHome,
-  FaCar,
-  FaCalendarAlt,
-  FaClock,
-  FaInfoCircle,
-  FaSearch,
-} from "react-icons/fa";
+import { FaPlus, FaMinus, FaSearch } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import AddNewVisitor from "./AddNewVisitor";
 import { addVisitor, getVisitors } from "../../../services/api/resident";
@@ -38,27 +27,30 @@ const ResidentVisitors: React.FC = () => {
   const [showAddVisitor, setShowAddVisitor] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const residentInfo = useSelector(
     (state: RootState) => state.auth.residentInfo
   );
   const residentId = residentInfo?._id;
 
-  const fetchVisitors = async () => {
+  const fetchVisitors = async (page: number = currentPage) => {
     try {
       setLoading(true);
-      const visitorsData = await getVisitors();
-      setVisitors(visitorsData);
+      const { data, totalPages } = await getVisitors(page, limit);
+      setVisitors(data);
+      setTotalPages(totalPages);
     } catch (error) {
       console.error("Error fetching visitors:", error);
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchVisitors();
-  }, []);
+  }, [currentPage, limit]);
 
   const handleAddVisitor = async (newVisitor: Partial<Visitor>) => {
     const formData = new FormData();
@@ -84,6 +76,17 @@ const ResidentVisitors: React.FC = () => {
     } catch (error) {
       console.error("Error adding visitor:", error);
     }
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimit(parseInt(event.target.value, 10));
+    setCurrentPage(1);
   };
 
   const filteredVisitors = visitors.filter((visitor) =>
@@ -125,7 +128,7 @@ const ResidentVisitors: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="mb-8 bg-white rounded-lg shadow-md p-6"
+            className="mb-8 bg-white rounded-lg shadow-md p-6 "
           >
             <AddNewVisitor onSubmit={handleAddVisitor} />
           </motion.div>
@@ -151,6 +154,39 @@ const ResidentVisitors: React.FC = () => {
           ))}
         </div>
       )}
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-4">
+          <span>Items per page:</span>
+          <select
+            value={limit}
+            onChange={handleLimitChange}
+            className="border border-gray-300 rounded-lg py-2 px-4"
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -74,7 +74,7 @@ const AddNewVisitor: React.FC<AddNewVisitorProps> = ({ onSubmit }) => {
   };
 
   return (
-    <div>
+    <div >
       <h2 className="text-2xl font-semibold mb-4 text-gray-800">
         Add New Visitor
       </h2>
