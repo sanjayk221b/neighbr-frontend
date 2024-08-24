@@ -1,20 +1,24 @@
-import { useState } from "react";
-import { Smile, Paperclip, Send } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { Smile, Paperclip, Send, X } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
+import { InputChangeEvent } from "@/types";
 
 interface MessageInputProps {
-  onSendMessage: (content: string) => void;
+  onSendMessage: (content: string, file?: File) => void;
 }
 
 const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (message.trim()) {
-      onSendMessage(message);
+    if (message.trim() || selectedFile) {
+      onSendMessage(message, selectedFile || undefined);
       setMessage("");
+      setSelectedFile(null);
     }
   };
 
@@ -22,8 +26,51 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
     setMessage((prevMessage) => prevMessage + emojiObject.emoji);
   };
 
+  const handleFileChange = (e: InputChangeEvent) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
+  const removeFile = () => {
+    setSelectedFile(null);
+  };
+
+  const renderFilePreview = (file: File) => {
+    const isImage = file.type.startsWith("image/");
+    return (
+      <div className="relative inline-block mr-2 mb-2">
+        {isImage ? (
+          <img
+            src={URL.createObjectURL(file)}
+            alt={file.name}
+            className="w-20 h-20 object-cover rounded"
+          />
+        ) : (
+          <div className="w-20 h-20 bg-gray-200 flex items-center justify-center rounded">
+            <span className="text-xs text-center break-words p-1">
+              {file.name}
+            </span>
+          </div>
+        )}
+        <button
+          onClick={removeFile}
+          className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1"
+        >
+          <X size={12} />
+        </button>
+      </div>
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit} className="p-4 border-t relative">
+      {selectedFile && (
+        <div className="mb-2 flex flex-wrap">
+          {renderFilePreview(selectedFile)}
+        </div>
+      )}
       <div className="flex items-center">
         <button
           type="button"
@@ -34,9 +81,11 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage }) => {
         </button>
         <input
           type="file"
-          // onChange={handleFileUpload}
+          onChange={handleFileChange}
           className="hidden"
           id="file-upload"
+          ref={fileInputRef}
+          accept="image/*,.pdf,.doc,.docx,.txt"
         />
         <label
           htmlFor="file-upload"
