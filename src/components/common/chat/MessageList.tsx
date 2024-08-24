@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { IMessage, IUser } from "@/types";
 import EmptyState from "./shimmer/ShimmerEmptyState";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, File, Image } from "lucide-react";
 
 interface MessageListProps {
   messages: IMessage[];
@@ -48,6 +48,33 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUser }) => {
     return Object.entries(groups);
   };
 
+  const renderMediaContent = (message: IMessage) => {
+    switch (message.mediaType) {
+      case "image":
+        return (
+          <img
+            src={message.mediaUrl}
+            alt="Shared image"
+            className="w-64 h-auto rounded-lg mb-2"
+          />
+        );
+      case "document":
+        return (
+          <a
+            href={message.mediaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-blue-600 hover:underline"
+          >
+            <File size={20} className="mr-2" />
+            View Document
+          </a>
+        );
+      default:
+        return null;
+    }
+  };
+
   const groupedMessages = groupMessagesByDate(messages);
 
   return (
@@ -82,6 +109,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUser }) => {
                       : "bg-gray-200 text-gray-800"
                   }`}
                 >
+                  {renderMediaContent(message)}
                   <p>{message.content}</p>
                   <div
                     className={`text-xs mt-1 ${

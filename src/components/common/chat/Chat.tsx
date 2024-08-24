@@ -92,16 +92,19 @@ const Chat: React.FC = () => {
     setMessages((prevMessages) => [...prevMessages, message]);
   };
 
-  const handleSendMessage = async (content: string) => {
+  const handleSendMessage = async (content: string, file?: File) => {
     if (selectedConversation && residentInfo && residentInfo._id) {
-      const message: Omit<IMessage, "_id" | "createdAt" | "updatedAt"> = {
-        conversationId: selectedConversation._id,
-        senderId: residentInfo._id,
-        senderType: "resident",
-        content,
-      };
+      const formData = new FormData();
+      formData.append("content", content);
+      if (file) {
+        formData.append("file", file);
+      }
+      formData.append("conversationId", selectedConversation._id);
+      formData.append("senderId", residentInfo._id);
+      formData.append("senderType", "resident");
+
       try {
-        const sentMessage = await sendMessage(message);
+        const sentMessage = await sendMessage(formData);
         socket?.emit("newMessage", sentMessage);
       } catch (error) {
         console.error("Failed to send message", error);

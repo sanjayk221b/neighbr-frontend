@@ -22,8 +22,8 @@ export interface IMessage {
   senderId: string;
   senderType: "resident" | "caretaker" | "admin";
   content: string;
-  // mediaType: "image" | "video" | "document" | "audio" | "none";
-  // mediaUrl?: string;
+  mediaType: "image" | "document" | "audio" | "none";
+  mediaUrl?: string;
   conversationId: string;
   createdAt?: Date;
   updatedAt?: Date;

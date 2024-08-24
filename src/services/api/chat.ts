@@ -2,11 +2,9 @@ import axiosInstance from "@/config/axiosConfig";
 import chatRoutes from "../endpoints/chatEndpoints";
 import { IMessage, IParticipant } from "@/types";
 
-export const sendMessage = async (
-  message: Omit<IMessage, "id" | "createdAt" | "updatedAt">
-) => {
+export const sendMessage = async (formData: FormData): Promise<IMessage> => {
   try {
-    const response = await axiosInstance.post(chatRoutes.sendMessage, message);
+    const response = await axiosInstance.post(chatRoutes.sendMessage, formData);
     return response.data;
   } catch (error) {
     throw error;
