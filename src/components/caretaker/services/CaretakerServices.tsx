@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from "react";
-import {
-  getAllServiceRequests,
-  updateServiceRequests,
-} from "../../../services/api/caretaker";
-import { IService } from "../../../types";
+import { getAllServiceRequests, updateServiceRequests } from "../../../services/api/caretaker";
+import { IService, IWorker } from "../../../types";
 import Swal from "sweetalert2";
 import ServiceDetailsModal from "./ServiceDetailsModal";
+import { getWorkers } from "@/services/api/worker";
 
 const CaretakerServices: React.FC = () => {
   const [services, setServices] = useState<IService[]>([]);
   const [selectedService, setSelectedService] = useState<IService | null>(null);
+  const [workers, setWorkers] = useState<IWorker[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchServices();
+    fetchWorkers();
   }, []);
 
   const fetchServices = async () => {
@@ -25,6 +25,15 @@ const CaretakerServices: React.FC = () => {
       console.error("Error fetching services:", error);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchWorkers = async () => {
+    try {
+      const res = await getWorkers();
+      setWorkers(res.data);
+    } catch (error) {
+      console.error("Error fetching workers:", error);
     }
   };
 
@@ -110,9 +119,9 @@ const CaretakerServices: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span
                     className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      service.status === "Completed"
+                      service.status === "completed"
                         ? "bg-success/10 text-success"
-                        : service.status === "Pending"
+                        : service.status === "pending"
                         ? "bg-warning/10 text-warning"
                         : "bg-destructive/10 text-destructive"
                     }`}
@@ -139,6 +148,7 @@ const CaretakerServices: React.FC = () => {
           service={selectedService}
           onClose={handleCloseModal}
           onUpdate={handleUpdateService}
+          workers={workers}  
         />
       )}
     </div>
