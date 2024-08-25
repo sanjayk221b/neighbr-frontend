@@ -33,6 +33,10 @@ const ResidentLogin = () => {
     }
   };
 
+  const handleForgotPassword = () => {
+    navigate("/forgot-password");
+  };
+
   return (
     <div className="h-screen flex justify-center items-center bg-blue-50">
       <div className="flex max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
@@ -88,6 +92,14 @@ const ResidentLogin = () => {
               Login
             </button>
           </form>
+          <div className="mt-4 text-center">
+            <button
+              onClick={handleForgotPassword}
+              className="text-blue-600 hover:underline"
+            >
+              Forgot Password?
+            </button>
+          </div>
         </div>
       </div>
     </div>
