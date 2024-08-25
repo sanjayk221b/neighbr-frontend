@@ -34,14 +34,15 @@ export const addVisitor = async (visitorData: FormData) => {
   }
 };
 
-export const getVisitors = async () => {
+export const getVisitors = async (page: number = 1, limit: number = 10) => {
   try {
-    const response = await axiosInstance.get(residentRoutes.getVisitors);
+    const response = await axiosInstance.get(residentRoutes.getVisitors(page, limit));
     return response.data;
   } catch (error) {
     throw error;
   }
 };
+
 
 export const addServiceRequest = async (serviceData: FormData) => {
   try {

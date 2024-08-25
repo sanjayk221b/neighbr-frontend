@@ -1,22 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  FaPlus,
-  FaMinus,
-  FaEnvelope,
-  FaPhone,
-  FaHome,
-  FaCar,
-  FaCalendarAlt,
-  FaClock,
-  FaInfoCircle,
-  FaSearch,
-} from "react-icons/fa";
+import { FaPlus, FaMinus, FaSearch } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import AddNewVisitor from "./AddNewVisitor";
 import { addVisitor, getVisitors } from "../../../services/api/resident";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import ShimmerVisitorCard from "./shimmer/ShimmerVisitorCard";
+import VisitorCard from "./VisitorCard";
 
 interface Visitor {
   _id: number;
@@ -37,27 +27,30 @@ const ResidentVisitors: React.FC = () => {
   const [showAddVisitor, setShowAddVisitor] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const residentInfo = useSelector(
     (state: RootState) => state.auth.residentInfo
   );
   const residentId = residentInfo?._id;
 
-  const fetchVisitors = async () => {
+  const fetchVisitors = async (page: number = currentPage) => {
     try {
       setLoading(true);
-      const visitorsData = await getVisitors();
-      setVisitors(visitorsData);
+      const { data, totalPages } = await getVisitors(page, limit);
+      setVisitors(data);
+      setTotalPages(totalPages);
     } catch (error) {
       console.error("Error fetching visitors:", error);
     } finally {
       setLoading(false);
     }
   };
-
   useEffect(() => {
     fetchVisitors();
-  }, []);
+  }, [currentPage, limit]);
 
   const handleAddVisitor = async (newVisitor: Partial<Visitor>) => {
     const formData = new FormData();
@@ -85,6 +78,17 @@ const ResidentVisitors: React.FC = () => {
     }
   };
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimit(parseInt(event.target.value, 10));
+    setCurrentPage(1);
+  };
+
   const filteredVisitors = visitors.filter((visitor) =>
     visitor.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -104,11 +108,11 @@ const ResidentVisitors: React.FC = () => {
         </div>
         <button
           onClick={() => setShowAddVisitor(!showAddVisitor)}
-          className="flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-indigo-700 transition duration-300 shadow-md w-full sm:w-auto"
+          className="flex items-center justify-center bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md w-full sm:w-auto"
         >
           {showAddVisitor ? (
             <>
-              <FaMinus className="mr-2" /> Hide Add Visitor Form
+              <FaMinus className="mr-2" /> Hide Form
             </>
           ) : (
             <>
@@ -124,7 +128,7 @@ const ResidentVisitors: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="mb-8"
+            className="mb-8 bg-white rounded-lg shadow-md p-6 "
           >
             <AddNewVisitor onSubmit={handleAddVisitor} />
           </motion.div>
@@ -138,62 +142,51 @@ const ResidentVisitors: React.FC = () => {
           ))}
         </div>
       ) : filteredVisitors.length === 0 ? (
-        <p className="text-gray-600 text-center text-lg bg-white rounded-xl shadow-md p-8">
-          No visitors found.
-        </p>
+        <div className="bg-white rounded-xl shadow-md p-8">
+          <p className="text-gray-600 text-center text-lg">
+            No visitors found.
+          </p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredVisitors.map((visitor) => (
-            <div
-              key={visitor._id}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition duration-300 border border-gray-100 transform hover:-translate-y-1"
-            >
-              <div className="flex items-center mb-4">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4 shadow-md">
-                  {visitor.name.charAt(0)}
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-blue-800">
-                    {visitor.name}
-                  </h3>
-                  <p className="text-sm text-gray-600 flex items-center">
-                    <FaEnvelope className="mr-2 text-blue-500" />{" "}
-                    {visitor.email}
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-3 text-gray-700">
-                <p className="flex items-center">
-                  <FaPhone className="mr-3 text-blue-500" />{" "}
-                  {visitor.mobileNumber}
-                </p>
-                <p className="flex items-center">
-                  <FaHome className="mr-3 text-blue-500" /> Apt:{" "}
-                  {visitor.apartmentNumber}
-                </p>
-                <p className="flex items-center">
-                  <FaCar className="mr-3 text-blue-500" />
-                  {visitor.hasVehicle
-                    ? `Vehicle: ${visitor.vehicleNumber}`
-                    : "No Vehicle"}
-                </p>
-                <p className="flex items-center">
-                  <FaCalendarAlt className="mr-3 text-blue-500" />{" "}
-                  {new Date(visitor.checkinDate).toLocaleDateString()}
-                </p>
-                <p className="flex items-center">
-                  <FaClock className="mr-3 text-blue-500" />{" "}
-                  {visitor.checkinTime}
-                </p>
-                <p className="flex items-center">
-                  <FaInfoCircle className="mr-3 text-blue-500" /> Purpose:{" "}
-                  {visitor.purpose}
-                </p>
-              </div>
-            </div>
+            <VisitorCard key={visitor._id} visitor={visitor} />
           ))}
         </div>
       )}
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-4">
+          <span>Items per page:</span>
+          <select
+            value={limit}
+            onChange={handleLimitChange}
+            className="border border-gray-300 rounded-lg py-2 px-4"
+          >
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select>
+        </div>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

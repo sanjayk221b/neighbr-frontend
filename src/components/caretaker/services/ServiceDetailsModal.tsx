@@ -1,5 +1,5 @@
 import React from "react";
-import { IService } from "../../../types";
+import { IService, IWorker } from "../../../types";
 import {
   Dialog,
   DialogContent,
@@ -23,12 +23,14 @@ interface ServiceDetailsModalProps {
   service: IService;
   onClose: () => void;
   onUpdate: (updatedService: IService) => void;
+  workers: IWorker[];
 }
 
 const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({
   service,
   onClose,
   onUpdate,
+  workers,
 }) => {
   const [editedService, setEditedService] = React.useState<IService>(service);
 
@@ -44,18 +46,19 @@ const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({
 
   return (
     <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[520px]">
         <DialogHeader>
           <DialogTitle>Edit Service</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-6 py-6">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="serviceType" className="text-right">
                 Service Type
               </Label>
               <Input
                 id="serviceType"
+                readOnly
                 value={editedService.serviceType}
                 onChange={(e) => handleChange("serviceType", e.target.value)}
                 className="col-span-3"
@@ -89,12 +92,21 @@ const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({
               <Label htmlFor="workerName" className="text-right">
                 Worker Name
               </Label>
-              <Input
-                id="workerName"
-                value={editedService.workerName}
-                onChange={(e) => handleChange("workerName", e.target.value)}
-                className="col-span-3"
-              />
+              <Select
+                onValueChange={(value) => handleChange("workerName", value)}
+                defaultValue={editedService.workerName}
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select worker" />
+                </SelectTrigger>
+                <SelectContent>
+                  {workers.map((worker) => (
+                    <SelectItem key={worker._id} value={worker.name}>
+                      {worker.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="status" className="text-right">
@@ -117,7 +129,7 @@ const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({
             </div>
           </div>
           <DialogFooter>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit">Save Changes</Button>
           </DialogFooter>
         </form>
       </DialogContent>

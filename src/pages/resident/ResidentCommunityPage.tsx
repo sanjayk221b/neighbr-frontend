@@ -29,16 +29,16 @@ const ResidentCommunityPage = () => {
   }, []);
 
   return (
-    <>
+    <div className="shadow-2xl">
       <ResidentNavbar />
-      <div className="pt-5">
+      <div className="pt-5 bg-gradient-to-br from-gray-100 to-blue-100 shadow-md">
         {loading ? (
           <ShimmerCommunityFeed />
         ) : (
           <CommunityFeed initialPosts={posts} currentUser={residentInfo} />
         )}
       </div>
-    </>
+    </div>
   );
 };
 
