@@ -3,6 +3,7 @@ const communityRoutes = {
   getPosts: "/v1/community/posts",
   createComment: "/v1/community/comments/:postId/create",
   getCommentsByPostId: "/v1/community/posts/:postId/comments",
+  reportPost: "/v1/community/posts/:postId/reports/create"
 };
 
 export default communityRoutes;

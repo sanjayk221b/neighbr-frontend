@@ -2,47 +2,32 @@ import axiosInstance from "@/config/axiosConfig";
 import communityRoutes from "../endpoints/community";
 
 export const createPost = async (formData: FormData) => {
-  try {
-    const response = await axiosInstance.post(
-      communityRoutes.createPost,
-      formData
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
-  }
+  const response = await axiosInstance.post(
+    communityRoutes.createPost,
+    formData
+  );
+  return response.data;
 };
 
 export const getPosts = async () => {
-  try {
-    const response = await axiosInstance.get(communityRoutes.getPosts);
-    return response.data;
-  } catch (error) {
-    console.error("Error creating post:", error);
-    throw error;
-  }
+  const response = await axiosInstance.get(communityRoutes.getPosts);
+  return response.data;
 };
 
 export const createComment = async (postId: string, content: string) => {
-  try {
-    const url = communityRoutes.createComment.replace(":postId", postId);
-    const response = await axiosInstance.post(url, { content });
-    return response.data;
-  } catch (error) {
-    console.error("Error creating comment:", error);
-    throw error;
-  }
+  const url = communityRoutes.createComment.replace(":postId", postId);
+  const response = await axiosInstance.post(url, { content });
+  return response.data;
 };
 
 export const getCommentsByPostId = async (postId: string) => {
-  try {
-    const response = await axiosInstance.get(
-      communityRoutes.getCommentsByPostId.replace(":postId", postId)
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error getting comments by post ID:", error);
-    throw error;
-  }
+  const url = communityRoutes.getCommentsByPostId.replace(":postId", postId);
+  const response = await axiosInstance.get(url);
+  return response.data;
+};
+
+export const reportPost = async (postId: string, reason: string) => {
+  const url = communityRoutes.reportPost.replace(":postId", postId);
+  const response = await axiosInstance.post(url, { reason });
+  return response.data;
 };
