@@ -17,7 +17,7 @@ const ResidentCommunityPage = () => {
     const fetchPosts = async () => {
       try {
         const response = await getPosts();
-        setPosts(response);
+        setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       } finally {
