@@ -14,6 +14,12 @@ export const getPosts = async () => {
   return response.data;
 };
 
+export const getPostById = async (id: string) => {
+  const url = communityRoutes.getPostById.replace(":postId", id);
+  const response = await axiosInstance.get(url);
+  return response.data;
+};
+
 export const createComment = async (postId: string, content: string) => {
   const url = communityRoutes.createComment.replace(":postId", postId);
   const response = await axiosInstance.post(url, { content });
@@ -22,6 +28,7 @@ export const createComment = async (postId: string, content: string) => {
 
 export const getCommentsByPostId = async (postId: string) => {
   const url = communityRoutes.getCommentsByPostId.replace(":postId", postId);
+  console.log(url);
   const response = await axiosInstance.get(url);
   return response.data;
 };
@@ -29,5 +36,12 @@ export const getCommentsByPostId = async (postId: string) => {
 export const reportPost = async (postId: string, reason: string) => {
   const url = communityRoutes.reportPost.replace(":postId", postId);
   const response = await axiosInstance.post(url, { reason });
+  return response.data;
+};
+
+export const getReports = async (page: number = 1, limit: number = 10) => {
+  const response = await axiosInstance.get(communityRoutes.getReports, {
+    params: { page, limit },
+  });
   return response.data;
 };
