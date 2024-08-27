@@ -19,8 +19,8 @@ const AdminResidents: React.FC = () => {
     const fetchResidents = async () => {
       setIsLoading(true);
       try {
-        const data = await getResidents();
-        setResidents(data);
+        const res = await getResidents();
+        setResidents(res.data);
       } catch (error) {
         console.error("Failed to fetch residents:", error);
       } finally {

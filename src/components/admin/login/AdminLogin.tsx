@@ -44,10 +44,9 @@ const AdminLogin = () => {
   const onSubmit = async (values: LoginFormValues) => {
     const { username, password } = values;
     try {
-      const token = await adminLogin(username, password);
-      if (token) {
-        console.log("Login successful:", token);
-        dispatch(setAdminLogin());
+      const res = await adminLogin(username, password);
+      if (res.success) {
+        dispatch(setAdminLogin(res.data.admin));
         navigate("/admin/dashboard");
       } else {
         setError("Invalid username or password");

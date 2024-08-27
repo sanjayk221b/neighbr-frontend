@@ -18,8 +18,8 @@ const AdminCaretakers: React.FC = () => {
   useEffect(() => {
     const fetchCaretakers = async () => {
       try {
-        const data = await getCaretakers();
-        setCaretakers(data);
+        const res = await getCaretakers();
+        setCaretakers(res.data);
       } catch (error) {
         console.error("Failed to fetch caretakers:", error);
       }

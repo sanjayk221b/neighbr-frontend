@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/components/ui/theme/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import AdminProtect from "@/components/hoc/AdminProtect";
 import { NLoader } from "@/components/ui/loader";
+import AdminCommunityPage from "@/pages/admin/AdminCommunityPage";
 
 const AdminLoginPage = lazy(() => import("../pages/admin/AdminLoginPage"));
 const AdminDashboardPage = lazy(() => import("../pages/admin/AdminDashboardPage"));
@@ -24,6 +25,7 @@ const AdminRoutes = () => {
           <Route path="/owners" element={AdminProtect(AdminOwnersPage)} />
           <Route path="/workers" element={AdminProtect(AdminWorkersPage)} />
           <Route path="/complaints" element={AdminProtect(AdminComplaintsPage)} />
+          <Route path="/community" element={AdminProtect(AdminCommunityPage)} />
         </Routes>
         </Suspense>
       </TooltipProvider>

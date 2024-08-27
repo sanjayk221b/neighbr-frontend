@@ -14,9 +14,11 @@ import {
 import { IConversation, IMessage, IParticipant } from "@/types";
 import ShimmerConversation from "./shimmer/ShimmerConversation";
 import EmptyState from "./shimmer/ShimmerEmptyState";
-import { MessageSquare } from "lucide-react";
+import { MessageSquare, Video } from "lucide-react";
 import ShimmerMessage from "./shimmer/ShimmerMessage";
 import { toast } from "react-toastify";
+import VideoCall from "../videocall/VideoCall";
+import VideoCallModal from "../videocall/VideoCallModal";
 
 const Chat: React.FC = () => {
   const [conversations, setConversations] = useState<IConversation[]>([]);
@@ -24,6 +26,9 @@ const Chat: React.FC = () => {
     useState<IConversation | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isVideoCallActive, setIsVideoCallActive] = useState(false);
+  const [roomID, setRoomID] = useState("");
+  const [isVideoCallModalVisible, setIsVideoCallModalVisible] = useState(false);
   const residentInfo = useSelector(
     (state: RootState) => state.auth.residentInfo
   );
@@ -40,6 +45,50 @@ const Chat: React.FC = () => {
       };
     }
   }, [socket]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("videoCallInvitation", (data) => {
+        if (data.conversationId === selectedConversation?._id) {
+          setRoomID(data.roomID);
+          setIsVideoCallModalVisible(true);
+        }
+      });
+
+      return () => {
+        socket.off("videoCallInvitation");
+      };
+    }
+  }, [socket, selectedConversation]);
+
+  const handleStartVideoCall = () => {
+    if (selectedConversation && residentInfo) {
+      const newRoomID = `${selectedConversation._id}_${Date.now()}`;
+      setRoomID(newRoomID);
+      setIsVideoCallActive(true);
+
+      socket?.emit("videoCallInvitation", {
+        conversationId: selectedConversation._id,
+        callerId: residentInfo._id,
+        roomID: newRoomID,
+      });
+    }
+  };
+
+  const handleAcceptVideoCall = () => {
+    setIsVideoCallActive(true);
+    setIsVideoCallModalVisible(false);
+  };
+
+  const handleRejectVideoCall = () => {
+    socket?.emit("videoCallRejected", { callerId: selectedConversation?._id });
+    setIsVideoCallModalVisible(false);
+  };
+
+  const handleEndVideoCall = () => {
+    setIsVideoCallActive(false);
+    setRoomID("");
+  };
 
   const fetchConversations = async (userId: string) => {
     try {
@@ -146,29 +195,49 @@ const Chat: React.FC = () => {
       <div className="w-2/3 flex flex-col">
         {selectedConversation ? (
           <>
-            <div className="h-16 bg-gray-50 border-b flex items-center px-4">
-              <img
-                src={getOtherParticipant(selectedConversation)?.image}
-                alt="Avatar"
-                className="w-10 h-10 rounded-full mr-3"
-              />
-              <div>
-                <h3 className="font-semibold">
-                  {selectedConversation.isGroup
-                    ? selectedConversation.groupName
-                    : getOtherParticipant(selectedConversation)?.name || "Chat"}
-                </h3>
-                <p className="text-sm text-gray-500">
-                  {selectedConversation.isGroup ? "Group" : "Private"}
-                </p>
+            <div className="h-16 bg-gray-50 border-b flex items-center justify-between px-4">
+              <div className="flex items-center">
+                <img
+                  src={getOtherParticipant(selectedConversation)?.image}
+                  alt="Avatar"
+                  className="w-10 h-10 rounded-full mr-3"
+                />
+                <div>
+                  <h3 className="font-semibold">
+                    {selectedConversation.isGroup
+                      ? selectedConversation.groupName
+                      : getOtherParticipant(selectedConversation)?.name ||
+                        "Chat"}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {selectedConversation.isGroup ? "Group" : "Private"}
+                  </p>
+                </div>
               </div>
+              <button
+                onClick={handleStartVideoCall}
+                className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition"
+              >
+                <Video size={24} />
+              </button>
             </div>
-            {isLoading ? (
-              <ShimmerMessage count={5} />
+            {isVideoCallActive ? (
+              <VideoCall
+                roomID={roomID}
+                onEndCall={handleEndVideoCall}
+                userId={residentInfo?._id || ""}
+                userName={residentInfo?.name || ""}
+              />
             ) : (
-              <MessageList messages={messages} currentUser={residentInfo} />
+              <>
+                {isLoading ? (
+                  <ShimmerMessage count={5} />
+                ) : (
+                  <MessageList messages={messages} currentUser={residentInfo} />
+                )}
+                <MessageInput onSendMessage={handleSendMessage} />
+              </>
             )}
-            <MessageInput onSendMessage={handleSendMessage} />
           </>
         ) : (
           <EmptyState
@@ -178,6 +247,12 @@ const Chat: React.FC = () => {
           />
         )}
       </div>
+      {isVideoCallModalVisible && (
+        <VideoCallModal
+          onAccept={handleAcceptVideoCall}
+          onReject={handleRejectVideoCall}
+        />
+      )}
     </div>
   );
 };
