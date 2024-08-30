@@ -23,7 +23,7 @@ const CaretakerNavbar = () => {
   const handleLogout = () => {
     caretakerLogout();
     dispatch(setCaretakerLogout());
-    navigate("/");
+    navigate("/caretaker");
   };
 
   useEffect(() => {
@@ -45,13 +45,13 @@ const CaretakerNavbar = () => {
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-4 ">
-            <Button
+            {/* <Button
               variant="ghost"
               onClick={() => navigate("/chats")}
               title="Messages"
             >
               <FaEnvelope className="h-5 w-5" />
-            </Button>
+            </Button> */}
             <ModeToggle />
             <div className="relative">
               <Button

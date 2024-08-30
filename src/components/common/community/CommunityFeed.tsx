@@ -8,7 +8,11 @@ const CommunityFeed = ({ initialPosts, currentUser }) => {
 
   const handleNewPost = async (formData: FormData) => {
     const newPost = await createPost(formData);
-    setPosts([newPost, ...posts]);
+    setPosts([newPost.data, ...posts]);
+  };
+
+  const handleDeletePost = (postId) => {
+    setPosts(posts.filter((post) => post._id !== postId));
   };
 
   return (
@@ -28,6 +32,7 @@ const CommunityFeed = ({ initialPosts, currentUser }) => {
               updatedAt={post.updatedAt}
               images={post.images}
               likes={post.likes}
+              onDelete={handleDeletePost}
             />
           </div>
         ))

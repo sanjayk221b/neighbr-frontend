@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { setAdminLogout } from "../../../redux/slices/authSlice";
 import { adminLogout } from "../../../services/api/admin";
 import { ModeToggle } from "../../ui/theme/mode-toggle";
@@ -6,9 +7,12 @@ import { Button } from "../../ui/button";
 
 const AdminNavbar = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleLogout = () => {
     adminLogout();
     dispatch(setAdminLogout());
+    navigate("/admin");
   };
 
   return (

@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/components/ui/theme/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import AdminProtect from "@/components/hoc/AdminProtect";
 import { NLoader } from "@/components/ui/loader";
-import AdminCommunityPage from "@/pages/admin/AdminCommunityPage";
 
 const AdminLoginPage = lazy(() => import("../pages/admin/AdminLoginPage"));
 const AdminDashboardPage = lazy(() => import("../pages/admin/AdminDashboardPage"));
@@ -12,6 +11,9 @@ const AdminOwnersPage = lazy(() => import("../pages/admin/AdminResidentsPage"));
 const AdminCaretakersPage = lazy(() => import("../pages/admin/AdminCaretakersPage"));
 const AdminWorkersPage = lazy(() => import("../pages/admin/AdminWorkersPage"));
 const AdminComplaintsPage = lazy(() => import("../pages/admin/AdminComplaintsPage"));
+const AdminCommunityPage = lazy(() => import("../pages/admin/AdminCommunityPage"));
+const AdminReportsPage = lazy(() => import("../pages/admin/AdminReportsPage"));
+const AdminPostDetailsPage = lazy(() => import("../pages/admin/AdminPostDetailsPage"));
 
 const AdminRoutes = () => {
   return (
@@ -26,6 +28,8 @@ const AdminRoutes = () => {
           <Route path="/workers" element={AdminProtect(AdminWorkersPage)} />
           <Route path="/complaints" element={AdminProtect(AdminComplaintsPage)} />
           <Route path="/community" element={AdminProtect(AdminCommunityPage)} />
+          <Route path="/reports" element={AdminProtect(AdminReportsPage)} />
+          <Route path="/community/posts/:postId/details" element={AdminProtect(AdminPostDetailsPage)} />
         </Routes>
         </Suspense>
       </TooltipProvider>

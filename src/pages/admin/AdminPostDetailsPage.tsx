@@ -1,26 +1,31 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom"; // Import useParams
 import AdminNavbar from "../../components/admin/navbar/AdminNavbar";
 import AdminSidebar from "../../components/admin/sidebar/AdminSidebar";
 import CommunityFeed from "@/components/common/community/CommunityFeed";
 import { RootState } from "@/redux/store";
-import { getPosts } from "@/services/api/community";
+import { getPostById } from "@/services/api/community";
 import ShimmerCommunityFeed from "@/components/common/community/shimmer/ShimmerCommunityFeed";
 
-const AdminCommunityPage = () => {
-  const [posts, setPosts] = useState([]);
+const AdminPostDetailsPage = () => {
+  const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const adminInfo = useSelector((state: RootState) => state.auth.adminInfo);
+  const { postId } = useParams<{ postId: string }>();
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await getPosts();
-      setPosts(response.data);
-      setLoading(false);
+    const fetchPost = async () => {
+      if (postId) {
+        const response = await getPostById(postId);
+        console.log(response);
+        setPost(response.data);
+        setLoading(false);
+      }
     };
 
-    fetchPosts();
-  }, []);
+    fetchPost();
+  }, [postId]);
 
   return (
     <div className="flex flex-col h-screen bg-background text-foreground">
@@ -31,7 +36,9 @@ const AdminCommunityPage = () => {
           {loading ? (
             <ShimmerCommunityFeed />
           ) : (
-            <CommunityFeed initialPosts={posts} currentUser={adminInfo} />
+            post && (
+              <CommunityFeed initialPosts={post} currentUser={adminInfo} />
+            )
           )}
         </main>
       </div>
@@ -39,4 +46,4 @@ const AdminCommunityPage = () => {
   );
 };
 
-export default AdminCommunityPage;
+export default AdminPostDetailsPage;
