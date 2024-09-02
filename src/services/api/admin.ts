@@ -1,5 +1,6 @@
 import axiosInstance from "@/config/axiosConfig";
 import adminRoutes from "../endpoints/adminEndPoints";
+import { IAnnouncement } from "@/types/announcement";
 
 interface ResidentData {
   name: string;
@@ -108,6 +109,29 @@ export const blockUnblockCaretaker = async (caretakerId: string) => {
 export const getAllComplaints = async () => {
   try {
     const response = await axiosInstance.get(adminRoutes.getAllComplaints);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createAnnouncement = async (
+  announcementData: Omit<IAnnouncement, "_id" | "createdAt" | "updatedAt">
+) => {
+  try {
+    const response = await axiosInstance.post(
+      adminRoutes.createAnnouncement,
+      announcementData
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAnnouncements = async () => {
+  try {
+    const response = await axiosInstance.get(adminRoutes.getAnnouncements);
     return response.data;
   } catch (error) {
     throw error;

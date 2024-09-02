@@ -11,4 +11,5 @@ export interface IService {
   solvedDate?: Date;
   imageUrl?: string;
   status: "pending" | "in-progress" | "completed";
+  feedback?: string;
 }

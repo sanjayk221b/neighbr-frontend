@@ -4,5 +4,5 @@ export const sidebarItems = [
   { path: "/caretaker/workers", label: "Workers" },
   { path: "/caretaker/maintenance", label: "Maintenance" },
   { path: "/caretaker/complaints", label: "Complaints" },
-  { path: "/caretaker/announcements", label: "Announcements" },
+  // { path: "/caretaker/announcements", label: "Announcements" },
 ];

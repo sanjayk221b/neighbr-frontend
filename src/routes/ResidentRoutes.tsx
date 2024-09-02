@@ -11,7 +11,6 @@ const ResidentServicesPage = lazy(() => import("../pages/resident/ResidentServic
 const ResidentComplaintsPage = lazy(() => import("../pages/resident/ResidentComplaintsPage"));
 const ResidentProfilePage = lazy(() => import("../pages/resident/ResidentProfilePage"));
 const ResidentChatPage = lazy(() => import("../pages/resident/ResidentChatPage"));
-const ResidentCommunityPage = lazy(() => import("../pages/resident/ResidentCommunityPage"));
 
 const ResidentRoutes = () => {
   return (
@@ -25,7 +24,6 @@ const ResidentRoutes = () => {
         <Route path="/complaints" element={ResidentProtect(ResidentComplaintsPage)} />
         <Route path="/profile" element={ResidentProtect(ResidentProfilePage)} />
         <Route path="/chats" element={ResidentProtect(ResidentChatPage)} />
-        <Route path="/community" element={ResidentProtect(ResidentCommunityPage)} />
       </Routes>
     </Suspense>
   );

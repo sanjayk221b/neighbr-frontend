@@ -10,35 +10,50 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Wrench, Home, ClipboardList, UserCheck } from "lucide-react";
+import { Users, Briefcase, MessageSquare, UserCheck } from "lucide-react";
 
-const CaretakerDashboard: React.FC = () => {
+const AdminDashboard: React.FC = () => {
   // Dummy data for the dashboard
   const stats = [
-    { title: "Pending Tasks", value: 5, icon: ClipboardList, color: "text-yellow-600" },
-    { title: "Properties Managed", value: 3, icon: Home, color: "text-blue-600" },
-    { title: "Maintenance Requests", value: 8, icon: Wrench, color: "text-red-600" },
-    { title: "Satisfied Tenants", value: 42, icon: UserCheck, color: "text-green-600" },
+    { title: "Total Users", value: 1234, icon: Users, color: "text-blue-600" },
+    {
+      title: "Active Services",
+      value: 56,
+      icon: Briefcase,
+      color: "text-green-600",
+    },
+    {
+      title: "Pending Complaints",
+      value: 23,
+      icon: MessageSquare,
+      color: "text-yellow-600",
+    },
+    {
+      title: "Active Workers",
+      value: 89,
+      icon: UserCheck,
+      color: "text-purple-600",
+    },
   ];
 
-  const recentTasks = [
-    { id: 1, description: "Fix leaky faucet in Apt 301", status: "Pending" },
-    { id: 2, description: "Clean common area", status: "Completed" },
-    { id: 3, description: "Inspect fire alarms", status: "In Progress" },
+  const recentComplaints = [
+    { id: 1, user: "John Doe", service: "Plumbing", status: "Pending" },
+    { id: 2, user: "Jane Smith", service: "Electricity", status: "Resolved" },
+    { id: 3, user: "Bob Johnson", service: "Cleaning", status: "In Progress" },
   ];
 
   const chartData = [
-    { name: "Jan", tasks: 20 },
-    { name: "Feb", tasks: 25 },
-    { name: "Mar", tasks: 30 },
-    { name: "Apr", tasks: 22 },
-    { name: "May", tasks: 28 },
-    { name: "Jun", tasks: 35 },
+    { name: "Jan", services: 65 },
+    { name: "Feb", services: 59 },
+    { name: "Mar", services: 80 },
+    { name: "Apr", services: 81 },
+    { name: "May", services: 56 },
+    { name: "Jun", services: 55 },
   ];
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Caretaker Dashboard</h1>
+      <h1 className="text-3xl font-bold">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
@@ -59,29 +74,32 @@ const CaretakerDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="col-span-1">
           <CardHeader>
-            <CardTitle>Recent Tasks</CardTitle>
+            <CardTitle>Recent Complaints</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {recentTasks.map((task) => (
+              {recentComplaints.map((complaint) => (
                 <div
-                  key={task.id}
+                  key={complaint.id}
                   className="flex items-center justify-between"
                 >
                   <div>
-                    <p className="font-medium">{task.description}</p>
+                    <p className="font-medium">{complaint.user}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {complaint.service}
+                    </p>
                   </div>
                   <Button
                     variant="outline"
                     className={
-                      task.status === "Completed"
+                      complaint.status === "Resolved"
                         ? "bg-green-100 text-green-800"
-                        : task.status === "In Progress"
+                        : complaint.status === "In Progress"
                         ? "bg-yellow-100 text-yellow-800"
                         : "bg-red-100 text-red-800"
                     }
                   >
-                    {task.status}
+                    {complaint.status}
                   </Button>
                 </div>
               ))}
@@ -91,7 +109,7 @@ const CaretakerDashboard: React.FC = () => {
 
         <Card className="col-span-1">
           <CardHeader>
-            <CardTitle>Tasks Overview</CardTitle>
+            <CardTitle>Services Overview</CardTitle>
           </CardHeader>
           <CardContent className="h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
@@ -100,7 +118,7 @@ const CaretakerDashboard: React.FC = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="tasks" fill="#8884d8" />
+                <Bar dataKey="services" fill="#8884d8" />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -110,4 +128,4 @@ const CaretakerDashboard: React.FC = () => {
   );
 };
 
-export default CaretakerDashboard;
+export default AdminDashboard;

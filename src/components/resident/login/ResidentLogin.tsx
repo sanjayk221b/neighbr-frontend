@@ -93,12 +93,12 @@ const ResidentLogin = () => {
             </button>
           </form>
           <div className="mt-4 text-center">
-            <button
+            {/* <button
               onClick={handleForgotPassword}
               className="text-blue-600 hover:underline"
             >
               Forgot Password?
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

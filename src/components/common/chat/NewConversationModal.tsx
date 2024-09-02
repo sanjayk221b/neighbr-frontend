@@ -41,7 +41,8 @@ const NewConversationModal: React.FC<NewConversationModalProps> = ({
     try {
       const fetchedUsers = await getUsers();
       const filteredUsers = fetchedUsers.filter(
-        (user: IParticipant) => user._id !== residentInfo?._id
+        (user: IParticipant) =>
+          user._id !== residentInfo?._id && user.name !== "Admin"
       );
       setUsers(filteredUsers);
     } catch (error) {

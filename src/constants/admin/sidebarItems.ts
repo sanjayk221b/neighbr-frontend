@@ -6,4 +6,5 @@ export const sidebarItems = [
   { path: "/admin/complaints", label: "Complaints" },
   { path: "/admin/community", label: "Community" },
   { path: "/admin/reports", label: "Reports" },
+  { path: "/admin/announcements", label: "announcements" },
 ];

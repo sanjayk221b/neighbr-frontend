@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { reportPost } from "@/services/api/community";
 import { MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,12 +20,29 @@ import { InputChangeEvent } from "@/types";
 interface PostOptionsProps {
   postId: string;
   onDelete: (postId: string) => void;
+  currentUser: {
+    _id: string;
+    isAdmin: boolean;
+  };
+  author: {
+    _id: string;
+  };
 }
 
-const PostOptions: React.FC<PostOptionsProps> = ({ postId, onDelete }) => {
+const PostOptions: React.FC<PostOptionsProps> = ({
+  postId,
+  onDelete,
+  currentUser,
+  author,
+}) => {
   const [reportReason, setReportReason] = useState("");
   const [customReason, setCustomReason] = useState("");
   const [isOpen, setIsOpen] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
+
+  useEffect(() => {
+    setCanDelete(currentUser._id === author._id || currentUser.isAdmin);
+  }, [currentUser, author]);
 
   const reportReasons = [
     "Inappropriate content",
@@ -42,10 +59,14 @@ const PostOptions: React.FC<PostOptionsProps> = ({ postId, onDelete }) => {
       return;
     }
 
-    const res = await reportPost(postId, finalReason);
-    if (res.success) {
-      toast.success("Post reported successfully");
-      setIsOpen(false);
+    try {
+      const res = await reportPost(postId, finalReason);
+      if (res.success) {
+        toast.success("Post reported successfully");
+        setIsOpen(false);
+      }
+    } catch (error) {
+      toast.error("Failed to report the post");
     }
   };
 
@@ -61,10 +82,14 @@ const PostOptions: React.FC<PostOptionsProps> = ({ postId, onDelete }) => {
   const handleDeleteClick = useCallback(
     (e: Event) => {
       e.preventDefault();
-      onDelete(postId);
-      setIsOpen(false);
+      if (canDelete) {
+        onDelete(postId);
+        setIsOpen(false);
+      } else {
+        toast.error("You do not have permission to delete this post");
+      }
     },
-    [onDelete, postId]
+    [onDelete, postId, canDelete]
   );
 
   return (
@@ -107,7 +132,11 @@ const PostOptions: React.FC<PostOptionsProps> = ({ postId, onDelete }) => {
             </Button>
           </DropdownMenuSubContent>
         </DropdownMenuSub>
-        <DropdownMenuItem onSelect={handleDeleteClick}>Delete</DropdownMenuItem>
+        {canDelete && (
+          <DropdownMenuItem onSelect={handleDeleteClick}>
+            Delete
+          </DropdownMenuItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

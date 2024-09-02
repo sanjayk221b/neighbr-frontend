@@ -5,7 +5,7 @@ const residentRoutes = {
   addVisitor: "management/visitors/create",
   getVisitors: (page: number, limit: number) => `management/visitors/all?page=${page}&limit=${limit}`,
   addServiceRequest: "/management/services/request",
-  getServiceRequests: "/management/services/requests",
+  getServiceRequests: (page: number, limit: number, searchTerm: string) => `/management/services/requests?page=${page}&limit=${limit}&search=${searchTerm}`,
   addComplaint: "/management/complaints/create",
   getComplaints: "/management/complaints/",
 };

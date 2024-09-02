@@ -20,6 +20,12 @@ export const getPostById = async (id: string) => {
   return response.data;
 };
 
+export const deletePost = async (postId: string) => {
+  const url = communityRoutes.deletePost.replace(":postId", postId);
+  const response = await axiosInstance.delete(url);
+  return response.data;
+};
+
 export const createComment = async (postId: string, content: string) => {
   const url = communityRoutes.createComment.replace(":postId", postId);
   const response = await axiosInstance.post(url, { content });
