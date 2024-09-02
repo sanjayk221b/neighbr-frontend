@@ -4,11 +4,11 @@ import PostActions from "./PostActions";
 import CommentSection from "./CommentSection";
 import PostOptions from "./PostOptions";
 
-const PostCard = ({ author, content, updatedAt, images, likes, postId, onDelete }) => {
+const PostCard = ({ author, content, updatedAt, images, likes, postId, onDelete, currentUser }) => {
   return (
     <div className="border-b border-gray-200 p-4 relative">
       <div className="absolute top-4 right-4">
-        <PostOptions postId={postId} onDelete={onDelete} />
+        <PostOptions postId={postId} onDelete={onDelete} author={author} currentUser={currentUser}/>
       </div>
       <PostHeader author={author} timestamp={updatedAt} />
       <PostContent content={content} images={images} />

@@ -14,6 +14,7 @@ const AdminComplaintsPage = lazy(() => import("../pages/admin/AdminComplaintsPag
 const AdminCommunityPage = lazy(() => import("../pages/admin/AdminCommunityPage"));
 const AdminReportsPage = lazy(() => import("../pages/admin/AdminReportsPage"));
 const AdminPostDetailsPage = lazy(() => import("../pages/admin/AdminPostDetailsPage"));
+const AdminAnnouncementsPage = lazy(() => import("../pages/admin/AdminAnnouncementsPage"));
 
 const AdminRoutes = () => {
   return (
@@ -30,6 +31,7 @@ const AdminRoutes = () => {
           <Route path="/community" element={AdminProtect(AdminCommunityPage)} />
           <Route path="/reports" element={AdminProtect(AdminReportsPage)} />
           <Route path="/community/posts/:postId/details" element={AdminProtect(AdminPostDetailsPage)} />
+          <Route path="/announcements" element={AdminProtect(AdminAnnouncementsPage)} />
         </Routes>
         </Suspense>
       </TooltipProvider>

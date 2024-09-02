@@ -36,13 +36,14 @@ export const addVisitor = async (visitorData: FormData) => {
 
 export const getVisitors = async (page: number = 1, limit: number = 10) => {
   try {
-    const response = await axiosInstance.get(residentRoutes.getVisitors(page, limit));
+    const response = await axiosInstance.get(
+      residentRoutes.getVisitors(page, limit)
+    );
     return response.data;
   } catch (error) {
     throw error;
   }
 };
-
 
 export const addServiceRequest = async (serviceData: FormData) => {
   try {
@@ -56,9 +57,15 @@ export const addServiceRequest = async (serviceData: FormData) => {
   }
 };
 
-export const getServiceRequests = async () => {
+export const getServiceRequests = async (
+  page: number = 1,
+  limit: number = 10,
+  searchTerm: string = ""
+) => {
   try {
-    const response = await axiosInstance.get(residentRoutes.getServiceRequests);
+    const response = await axiosInstance.get(
+      residentRoutes.getServiceRequests(page, limit, searchTerm)
+    );
     return response.data;
   } catch (error) {
     throw error;

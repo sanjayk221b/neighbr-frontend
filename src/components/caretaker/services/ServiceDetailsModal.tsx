@@ -18,6 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { format } from "date-fns";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ServiceDetailsModalProps {
   service: IService;
@@ -113,19 +114,32 @@ const ServiceDetailsModal: React.FC<ServiceDetailsModalProps> = ({
                 Status
               </Label>
               <Select
-                onValueChange={(value) => handleChange("status", value)}
+                onValueChange={(value) =>
+                  handleChange("status", value as IService["status"])
+                }
                 defaultValue={editedService.status}
               >
                 <SelectTrigger className="col-span-3">
                   <SelectValue placeholder="Select status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Pending">Pending</SelectItem>
-                  <SelectItem value="In Progress">In Progress</SelectItem>
-                  <SelectItem value="Completed">Completed</SelectItem>
-                  <SelectItem value="Cancelled">Cancelled</SelectItem>
+                  <SelectItem value="pending">Pending</SelectItem>
+                  <SelectItem value="in-progress">In Progress</SelectItem>
+                  <SelectItem value="completed">Completed</SelectItem>
                 </SelectContent>
               </Select>
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="feedback" className="text-right">
+                Feedback
+              </Label>
+              <Textarea
+                id="feedback"
+                value={editedService.feedback || "No feedback provided"}
+                readOnly
+                className="col-span-3 "
+                placeholder="No feedback available"
+              />
             </div>
           </div>
           <DialogFooter>
