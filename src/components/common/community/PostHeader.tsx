@@ -1,6 +1,13 @@
+import React from "react";
 import moment from "moment";
+import { IResident } from "@/types";
 
-const PostHeader = ({ author, timestamp }) => {
+interface PostHeaderProps {
+  author: IResident;
+  timestamp: Date;
+}
+
+const PostHeader: React.FC<PostHeaderProps> = ({ author, timestamp }) => {
   const relativeTimestamp = moment(timestamp).fromNow();
   return (
     <div className="flex items-center mb-4">

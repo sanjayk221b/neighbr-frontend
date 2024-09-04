@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import {
   addServiceRequest,
@@ -8,41 +8,22 @@ import ServiceRequestForm from "./ServiceRequestForm";
 import ServiceRequestCard from "./ServiceRequestCard";
 import Shimmer from "@/components/ui/shimmer/ShimmerCard";
 import { ServiceRequestFormValues } from "@/validations/resident/serviceRequestSchema";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { updateServiceRequests } from "@/services/api/caretaker";
 import { toast } from "react-toastify";
-
-interface ServiceRequest {
-  _id: string;
-  serviceType: string;
-  date: string;
-  time: string;
-  description: string;
-  status: "pending" | "in-progress" | "completed";
-}
+import { IService, InputChangeEvent } from "@/types";
+import FeedbackModal from "./FeedbackModal"; 
 
 const ResidentServices: React.FC = () => {
   const [showNewRequestForm, setShowNewRequestForm] = useState(false);
-  const [serviceRequests, setServiceRequests] = useState<ServiceRequest[]>([]);
+  const [serviceRequests, setServiceRequests] = useState<IService[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
-  const [selectedRequest, setSelectedRequest] = useState<ServiceRequest | null>(
-    null
-  );
-  const [feedback, setFeedback] = useState("");
+  const [selectedRequest, setSelectedRequest] = useState<IService | null>(null);
 
   const fetchServiceRequests = async (page: number = currentPage) => {
     try {
@@ -82,24 +63,27 @@ const ResidentServices: React.FC = () => {
     }
   };
 
-  const handleLimitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLimitChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setLimit(parseInt(event.target.value, 10));
     setCurrentPage(1);
   };
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = (event: InputChangeEvent) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
 
-  const handleFeedbackSubmit = async () => {
+  const handleFeedbackSubmit = async (feedback: string) => {
     if (!selectedRequest) return;
 
     try {
-      await updateServiceRequests(selectedRequest._id, { feedback });
-      toast.success("Feedback added");
+      const updatedRequest: IService = {
+        ...selectedRequest,
+        feedback,
+      };
+      await updateServiceRequests(updatedRequest._id, updatedRequest);
+      toast.success("Feedback updated successfully");
       setShowFeedbackModal(false);
-      setFeedback("");
       fetchServiceRequests();
     } catch (error) {
       console.error("Error submitting feedback:", error);
@@ -194,26 +178,12 @@ const ResidentServices: React.FC = () => {
         </div>
       )}
 
-      <Dialog open={showFeedbackModal} onOpenChange={setShowFeedbackModal}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Add Feedback</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-4">
-            <div>
-              <Label htmlFor="feedback">Your Feedback</Label>
-              <Textarea
-                id="feedback"
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                placeholder="Please provide your feedback..."
-                className="mt-1"
-              />
-            </div>
-            <Button onClick={handleFeedbackSubmit}>Submit Feedback</Button>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <FeedbackModal
+        isOpen={showFeedbackModal}
+        onClose={() => setShowFeedbackModal(false)}
+        onSubmit={handleFeedbackSubmit}
+        initialFeedback={selectedRequest?.feedback || ""}
+      />
     </div>
   );
 };

@@ -7,23 +7,23 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import ShimmerVisitorCard from "./shimmer/ShimmerVisitorCard";
 import VisitorCard from "./VisitorCard";
-
-interface Visitor {
-  _id: number;
-  name: string;
-  email: string;
-  mobileNumber: string;
-  apartmentNumber: string;
-  image: File | null;
-  hasVehicle: boolean;
-  vehicleNumber: string;
-  checkinDate: string;
-  checkinTime: string;
-  purpose: string;
-}
+import { IVisitor } from "@/types";
+// interface Visitor {
+//   _id: number;
+//   name: string;
+//   email: string;
+//   mobileNumber: string;
+//   apartmentNumber: string;
+//   image: File | null;
+//   hasVehicle: boolean;
+//   vehicleNumber: string;
+//   checkinDate: string;
+//   checkinTime: string;
+//   purpose: string;
+// }
 
 const ResidentVisitors: React.FC = () => {
-  const [visitors, setVisitors] = useState<Visitor[]>([]);
+  const [visitors, setVisitors] = useState<IVisitor[]>([]);
   const [showAddVisitor, setShowAddVisitor] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -52,7 +52,7 @@ const ResidentVisitors: React.FC = () => {
     fetchVisitors();
   }, [currentPage, limit]);
 
-  const handleAddVisitor = async (newVisitor: Partial<Visitor>) => {
+  const handleAddVisitor = async (newVisitor: Partial<IVisitor>) => {
     const formData = new FormData();
 
     Object.entries(newVisitor).forEach(([key, value]) => {

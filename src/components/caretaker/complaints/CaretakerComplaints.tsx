@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { getAllComplaints, updateComplaint } from "../../../services/api/caretaker";
+import {
+  getAllComplaints,
+  updateComplaint,
+} from "../../../services/api/caretaker";
 import Swal from "sweetalert2";
-import IResident from "../../../types/resident";
-
-interface IComplaint {
-  _id: string;
-  title: string;
-  description: string;
-  residentId: IResident;
-  isResolved: boolean;
-  image: string;
-  createdAt: string;
-}
+import { PopulatedComplaint as IComplaint } from "@/types";
 
 const CaretakerComplaints: React.FC = () => {
   const [complaints, setComplaints] = useState<IComplaint[]>([]);
-  const [selectedComplaint, setSelectedComplaint] = useState<IComplaint | null>(null);
+  const [selectedComplaint, setSelectedComplaint] = useState<IComplaint | null>(
+    null
+  );
 
   useEffect(() => {
     fetchComplaints();
@@ -54,7 +49,11 @@ const CaretakerComplaints: React.FC = () => {
             Swal.fire("Saved!", "The complaint has been updated.", "success");
           } catch (error) {
             console.error("Error updating complaint:", error);
-            Swal.fire("Error!", "There was a problem updating the complaint.", "error");
+            Swal.fire(
+              "Error!",
+              "There was a problem updating the complaint.",
+              "error"
+            );
           }
         }
       });
@@ -100,18 +99,31 @@ const CaretakerComplaints: React.FC = () => {
           <tbody className="divide-y">
             {complaints.map((complaint) => (
               <tr key={complaint._id} className="hover:bg-accent">
-                <td className="px-6 py-4 whitespace-nowrap">{complaint.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{complaint.description.substring(0, 50)}...</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {complaint.title}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  {complaint.description.substring(0, 50)}...
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {new Date(complaint.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${complaint.isResolved ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"}`}>
+                  <span
+                    className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                      complaint.isResolved
+                        ? "bg-success/10 text-success"
+                        : "bg-destructive/10 text-destructive"
+                    }`}
+                  >
                     {complaint.isResolved ? "Resolved" : "Unresolved"}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <button onClick={() => handleViewClick(complaint)} className="text-primary hover:underline">
+                  <button
+                    onClick={() => handleViewClick(complaint)}
+                    className="text-primary hover:underline"
+                  >
                     View/Edit
                   </button>
                 </td>

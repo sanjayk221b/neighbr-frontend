@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from "react";
-import { IMessage, IUser } from "@/types";
+import { IMessage, IResident } from "@/types";
 import EmptyState from "./shimmer/ShimmerEmptyState";
-import { MessageSquare, File, Image } from "lucide-react";
+import { MessageSquare, File } from "lucide-react";
 
 interface MessageListProps {
   messages: IMessage[];
-  currentUser: IUser;
+  currentUser: IResident;
 }
 
 const MessageList: React.FC<MessageListProps> = ({ messages, currentUser }) => {
@@ -19,17 +19,17 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUser }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const isValidDate = (dateString: string): boolean => {
+  const isValidDate = (dateString: Date): boolean => {
     const date = new Date(dateString);
     return !isNaN(date.getTime());
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: Date) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
 
-  const formatTime = (dateString: string) => {
+  const formatTime = (dateString: Date) => {
     const date = new Date(dateString);
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };

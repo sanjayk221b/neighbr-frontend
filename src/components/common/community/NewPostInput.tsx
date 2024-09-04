@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { Trash, Image, Video, FileText } from "lucide-react";
+import { IResident } from "@/types";
 
-const NewPostInput = ({ onSubmit, currentUser }) => {
+interface NewPostInputProps {
+  onSubmit: (formData: FormData) => void;
+  currentUser: IResident;
+}
+
+const NewPostInput: React.FC<NewPostInputProps> = ({
+  onSubmit,
+  currentUser,
+}) => {
   const [postContent, setPostContent] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (postContent.trim()) {
       const formData = new FormData();
@@ -21,8 +30,10 @@ const NewPostInput = ({ onSubmit, currentUser }) => {
     }
   };
 
-  const handleImageSelect = (e) => {
-    setSelectedImage(e.target.files[0]);
+  const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setSelectedImage(e.target.files[0]);
+    }
   };
 
   const handleImageRemove = () => {

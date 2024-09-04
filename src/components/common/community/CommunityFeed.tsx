@@ -2,8 +2,18 @@ import { useState } from "react";
 import NewPostInput from "./NewPostInput";
 import PostCard from "./PostCard";
 import { createPost, deletePost } from "@/services/api/community";
+import { IPost } from "@/types/community";
+import { IResident } from "@/types";
 
-const CommunityFeed = ({ initialPosts, currentUser }) => {
+interface CommunityFeedProps {
+  initialPosts: IPost[];
+  currentUser: IResident | null;
+}
+
+const CommunityFeed: React.FC<CommunityFeedProps> = ({
+  initialPosts,
+  currentUser,
+}) => {
   const [posts, setPosts] = useState(initialPosts);
 
   const handleNewPost = async (formData: FormData) => {
@@ -15,10 +25,10 @@ const CommunityFeed = ({ initialPosts, currentUser }) => {
     const res = await deletePost(postId);
     if (res.success) setPosts(posts.filter((post) => post._id !== postId));
   };
-  
+
   return (
     <div className="max-w-2xl mx-auto space-y-6">
-      <NewPostInput onSubmit={handleNewPost} currentUser={currentUser} />
+      <NewPostInput onSubmit={handleNewPost} currentUser={currentUser!} />
 
       {posts.length > 0 ? (
         posts.map((post, index) => (

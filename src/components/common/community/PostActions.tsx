@@ -1,5 +1,5 @@
 interface PostActionsProps {
-  likes: string;
+  likes: number;
 }
 
 const PostActions: React.FC<PostActionsProps> = ({ likes }) => {

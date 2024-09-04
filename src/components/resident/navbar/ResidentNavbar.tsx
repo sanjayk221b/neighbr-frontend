@@ -90,14 +90,14 @@ const ResidentNavbar = () => {
                 {profileDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
                     <button
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 flex items-center"
+                      className=" w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 flex items-center"
                       onClick={() => navigate("/profile")}
                     >
                       <User className="mr-2" size={18} />
                       Profile
                     </button>
                     <button
-                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 flex items-center"
+                      className=" w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 flex items-center"
                       onClick={handleLogout}
                     >
                       <LogOut className="mr-2" size={18} />
@@ -135,7 +135,7 @@ const ResidentNavbar = () => {
               {navItems.map((item) => (
                 <button
                   key={item.name}
-                  className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left flex items-center ${
+                  className={` px-3 py-2 rounded-md text-base font-medium w-full text-left flex items-center ${
                     location.pathname === item.path
                       ? "text-blue-600 bg-gray-100"
                       : "text-gray-600 hover:bg-gray-100"
@@ -147,14 +147,14 @@ const ResidentNavbar = () => {
                 </button>
               ))}
               <button
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 w-full text-left flex items-center"
+                className=" px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 w-full text-left flex items-center"
                 onClick={() => navigate("/profile")}
               >
                 <User className="mr-2" size={18} />
                 Profile
               </button>
               <button
-                className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 w-full text-left flex items-center"
+                className=" px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 w-full text-left flex items-center"
                 onClick={handleLogout}
               >
                 <LogOut className="mr-2" size={18} />

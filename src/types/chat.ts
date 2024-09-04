@@ -1,4 +1,3 @@
-// interfaces.ts
 export interface IParticipant {
   _id: string;
   type: "resident" | "caretaker";
@@ -12,7 +11,7 @@ export interface IConversation {
   isGroup: boolean;
   groupName?: string;
   groupAdmins?: string[];
-  lastMessage?: string;
+  lastMessage?: IMessage;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,7 +24,7 @@ export interface IMessage {
   mediaType: "image" | "document" | "audio" | "none";
   mediaUrl?: string;
   conversationId: string;
-  createdAt?: Date;
+  createdAt: Date;
   updatedAt?: Date;
 }
 

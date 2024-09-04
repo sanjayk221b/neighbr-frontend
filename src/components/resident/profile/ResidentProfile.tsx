@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { changePassword } from "../../../services/api/resident";
+import { IResident } from "@/types";
 import {
   FaEnvelope,
   FaPhone,
@@ -10,7 +11,11 @@ import {
 } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-const ResidentProfile = ({ resident }) => {
+interface ResidentProfileProps {
+  resident: IResident;
+}
+
+const ResidentProfile: React.FC<ResidentProfileProps> = ({ resident }) => {
   const [showPasswordForm, setShowPasswordForm] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -19,7 +24,7 @@ const ResidentProfile = ({ resident }) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handlePasswordChange = async (e) => {
+  const handlePasswordChange = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const response = await changePassword(
       resident.email,
@@ -67,7 +72,7 @@ const ResidentProfile = ({ resident }) => {
                   Vehicles
                 </h2>
                 <div className="flex flex-wrap gap-2">
-                  {resident.vehicles.map((vehicle, index) => (
+                  {resident.vehicles?.map((vehicle, index) => (
                     <span
                       key={index}
                       className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
@@ -210,7 +215,10 @@ const ResidentProfile = ({ resident }) => {
   );
 };
 
-const InfoItem = ({ icon, text }) => (
+const InfoItem: React.FC<{ icon: JSX.Element; text: string }> = ({
+  icon,
+  text,
+}) => (
   <div className="flex items-center space-x-3 text-gray-700">
     <span className="text-blue-600">{icon}</span>
     <span>{text}</span>
