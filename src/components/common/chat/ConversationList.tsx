@@ -46,7 +46,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       .includes(searchTerm.toLowerCase());
   });
 
-  const formatLastMessageTime = (timestamp: string) => {
+  const formatLastMessageTime = (timestamp: Date) => {
     if (!timestamp) return "";
     const date = new Date(timestamp);
     const now = new Date();
@@ -120,12 +120,12 @@ const ConversationList: React.FC<ConversationListProps> = ({
                     <h3 className="font-semibold truncate">
                       {otherParticipant?.name}
                     </h3>
-                    {conversation?.lastMessage && (
+                    {conversation.lastMessage && (
                       <span className="text-xs text-gray-500">
                         {formatLastMessageTime(
                           conversation.lastMessage.createdAt
                         )}
-                      </span>
+                      </span> 
                     )}
                   </div>
                   <p className="text-sm text-gray-500 truncate">

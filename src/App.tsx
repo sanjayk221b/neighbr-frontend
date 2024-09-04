@@ -7,10 +7,10 @@ import { SocketProvider } from "./contexts/SocketProvider";
 function App() {
   return (
     <SocketProvider>
-        <ToastContainer />
-        <Router>
-          <AppRouter />
-        </Router>
+      <ToastContainer />
+      <Router>
+        <AppRouter />
+      </Router>
     </SocketProvider>
   );
 }

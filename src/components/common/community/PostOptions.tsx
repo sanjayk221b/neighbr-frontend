@@ -15,18 +15,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "react-toastify";
 import { Input } from "@/components/ui/input";
-import { InputChangeEvent } from "@/types";
+import { InputChangeEvent, IResident } from "@/types";
 
 interface PostOptionsProps {
   postId: string;
   onDelete: (postId: string) => void;
-  currentUser: {
-    _id: string;
-    isAdmin: boolean;
-  };
-  author: {
-    _id: string;
-  };
+  currentUser: IResident;
+  author: IResident;
 }
 
 const PostOptions: React.FC<PostOptionsProps> = ({

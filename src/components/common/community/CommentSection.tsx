@@ -1,13 +1,8 @@
 import { useEffect, useState } from "react";
 import { getCommentsByPostId, createComment } from "@/services/api/community";
+import { IComment } from "@/types/community";
 import Comment from "./Comment";
 import CommentInput from "./CommentInput";
-
-interface IComment {
-  author: string;
-  content: string;
-  postId: string;
-}
 
 interface CommentSectionProps {
   postId: string;

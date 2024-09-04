@@ -14,7 +14,7 @@ import {
 import { IConversation, IMessage, IParticipant } from "@/types";
 import ShimmerConversation from "./shimmer/ShimmerConversation";
 import EmptyState from "./shimmer/ShimmerEmptyState";
-import { MessageSquare, Video } from "lucide-react";
+import { MessageSquare, Video, X } from "lucide-react";
 import ShimmerMessage from "./shimmer/ShimmerMessage";
 import { toast } from "react-toastify";
 import VideoCall from "../videocall/VideoCall";
@@ -36,10 +36,8 @@ const Chat: React.FC = () => {
 
   useEffect(() => {
     if (residentInfo?._id) fetchConversations(residentInfo._id);
-
     if (socket) {
       socket.on("newMessage", handleNewMessage);
-
       return () => {
         socket.off("newMessage", handleNewMessage);
       };
@@ -54,7 +52,6 @@ const Chat: React.FC = () => {
           setIsVideoCallModalVisible(true);
         }
       });
-
       return () => {
         socket.off("videoCallInvitation");
       };
@@ -176,77 +173,85 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex h-full rounded-lg overflow-hidden bg-white shadow-lg">
-      <div className="w-1/3 border-r border-gray-200">
-        <div className="h-16 bg-gray-50 border-b flex items-center px-4">
-          <h2 className="text-xl font-semibold">Messages</h2>
-        </div>
-        {isLoading ? (
-          <ShimmerConversation count={5} />
-        ) : (
-          <ConversationList
-            conversations={conversations}
-            onSelect={handleConversationSelect}
-            selectedConversation={selectedConversation}
-            onNewConversation={handleNewConversation}
+    <div className="relative h-full w-full">
+      {isVideoCallActive ? (
+        <div className="absolute inset-0 z-50 bg-black">
+          <VideoCall
+            roomID={roomID}
+            onEndCall={handleEndVideoCall}
+            userId={residentInfo?._id || ""}
+            userName={residentInfo?.name || ""}
           />
-        )}
-      </div>
-      <div className="w-2/3 flex flex-col">
-        {selectedConversation ? (
-          <>
-            <div className="h-16 bg-gray-50 border-b flex items-center justify-between px-4">
-              <div className="flex items-center">
-                <img
-                  src={getOtherParticipant(selectedConversation)?.image}
-                  alt="Avatar"
-                  className="w-10 h-10 rounded-full mr-3"
-                />
-                <div>
-                  <h3 className="font-semibold">
-                    {selectedConversation.isGroup
-                      ? selectedConversation.groupName
-                      : getOtherParticipant(selectedConversation)?.name ||
-                        "Chat"}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {selectedConversation.isGroup ? "Group" : "Private"}
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={handleStartVideoCall}
-                className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition"
-              >
-                <Video size={24} />
-              </button>
+          <button
+            onClick={handleEndVideoCall}
+            className="absolute top-4 right-4 bg-red-500 text-white rounded-full p-2 hover:bg-red-600 transition"
+          >
+            <X size={24} />
+          </button>
+        </div>
+      ) : (
+        <div className="flex h-full rounded-lg overflow-hidden bg-white shadow-lg">
+          <div className="w-1/3 border-r border-gray-200">
+            <div className="h-16 bg-gray-50 border-b flex items-center px-4">
+              <h2 className="text-xl font-semibold">Messages</h2>
             </div>
-            {isVideoCallActive ? (
-              <VideoCall
-                roomID={roomID}
-                onEndCall={handleEndVideoCall}
-                userId={residentInfo?._id || ""}
-                userName={residentInfo?.name || ""}
-              />
+            {isLoading ? (
+              <ShimmerConversation count={5} />
             ) : (
+              <ConversationList
+                conversations={conversations}
+                onSelect={handleConversationSelect}
+                selectedConversation={selectedConversation}
+                onNewConversation={handleNewConversation}
+              />
+            )}
+          </div>
+          <div className="w-2/3 flex flex-col">
+            {selectedConversation ? (
               <>
+                <div className="h-16 bg-gray-50 border-b flex items-center justify-between px-4">
+                  <div className="flex items-center">
+                    <img
+                      src={getOtherParticipant(selectedConversation)?.image}
+                      alt="Avatar"
+                      className="w-10 h-10 rounded-full mr-3"
+                    />
+                    <div>
+                      <h3 className="font-semibold">
+                        {selectedConversation.isGroup
+                          ? selectedConversation.groupName
+                          : getOtherParticipant(selectedConversation)?.name ||
+                            "Chat"}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {selectedConversation.isGroup ? "Group" : "Private"}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={handleStartVideoCall}
+                    className="bg-blue-500 text-white rounded-full p-2 hover:bg-blue-600 transition"
+                  >
+                    <Video size={24} />
+                  </button>
+                </div>
                 {isLoading ? (
                   <ShimmerMessage count={5} />
                 ) : (
-                  <MessageList messages={messages} currentUser={residentInfo} />
+                  <MessageList messages={messages} currentUser={residentInfo!} />
                 )}
                 <MessageInput onSendMessage={handleSendMessage} />
               </>
+            ) : (
+              <EmptyState
+                icon={<MessageSquare size={48} />}
+                message="Select a conversation"
+                description="Choose a conversation from the list to start chatting"
+              />
             )}
-          </>
-        ) : (
-          <EmptyState
-            icon={<MessageSquare size={48} />}
-            message="Select a conversation"
-            description="Choose a conversation from the list to start chatting"
-          />
-        )}
-      </div>
+          </div>
+        </div>
+      )}
       {isVideoCallModalVisible && (
         <VideoCallModal
           onAccept={handleAcceptVideoCall}

@@ -5,8 +5,8 @@ interface AuthState {
   adminLoggedIn: boolean;
   residentLoggedIn: boolean;
   caretakerLoggedIn: boolean;
-  adminInfo: Partial<IResident> | null;
-  residentInfo: Partial<IResident> | null;
+  adminInfo: IResident | null;
+  residentInfo: IResident | null;
   caretakerInfo: Partial<ICaretaker> | null;
 }
 
@@ -26,13 +26,13 @@ const authSlice = createSlice({
     setAdminLogin: (state, action) => {
       state.adminLoggedIn = true;
       localStorage.setItem("adminLoggedIn", "true");
-      state.adminInfo = action.payload; 
+      state.adminInfo = action.payload;
       localStorage.setItem("adminInfo", JSON.stringify(action.payload));
     },
     setAdminLogout: (state) => {
       state.adminLoggedIn = false;
       localStorage.removeItem("adminLoggedIn");
-      localStorage.removeItem("adminInfo"); 
+      localStorage.removeItem("adminInfo");
       state.adminInfo = null;
     },
     setResidentLogin: (state, action) => {
