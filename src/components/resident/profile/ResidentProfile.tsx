@@ -43,7 +43,7 @@ const ResidentProfile: React.FC<ResidentProfileProps> = ({ resident }) => {
   };
 
   return (
-    <div className="bg-blue-50 min-h-screen p-8">
+    <div className="bg-blue-50 min-h-screen p-8 pt-24">
       <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl overflow-hidden transform hover:scale-105 transition-transform duration-300">
         <div className="md:flex">
           <div className="md:flex-shrink-0 p-8">
