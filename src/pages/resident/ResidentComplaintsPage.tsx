@@ -5,7 +5,7 @@ const ResidentComplaintsPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-blue-200">
       <ResidentNavbar />
-      <main className="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+      <main className="max-w-6xl mx-auto py-6 px-4 sm:px-6 lg:px-8 pt-24">
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h1 className="text-3xl mx-auto font-bold text-blue-800">
             Complaints Management
