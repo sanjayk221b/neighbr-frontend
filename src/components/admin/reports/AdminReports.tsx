@@ -151,7 +151,7 @@ const AdminReports: React.FC = () => {
                       )}
                     </Button>
                   </td>
-                  <td className="px-4 py-4 whitespace-nowrap">{postId}</td>
+                  <td className="px-4 py-4 whitespace-nowrap">{}</td>
                   <td className="px-4 py-4 whitespace-nowrap">
                     {reports.length}
                   </td>

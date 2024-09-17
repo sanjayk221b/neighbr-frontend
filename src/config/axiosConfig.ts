@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     console.error("API Error:", error);
 
-    toast.error(error.response?.data?.message || "Something went wrong");
+    // toast.error(error.response?.data?.message || "Something went wrong");
 
     return Promise.reject(error);
   }

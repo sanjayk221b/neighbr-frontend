@@ -18,27 +18,18 @@ const AdminResidents: React.FC = () => {
   useEffect(() => {
     const fetchResidents = async () => {
       setIsLoading(true);
-      try {
-        const res = await getResidents();
-        setResidents(res.data);
-      } catch (error) {
-        console.error("Failed to fetch residents:", error);
-      } finally {
-        setIsLoading(false);
-      }
+      const res = await getResidents();
+      setResidents(res.data);
+      setIsLoading(false);
     };
 
     fetchResidents();
   }, []);
 
   const handleAddResident = async (userData: any) => {
-    try {
-      await addResident(userData);
-      const data = await getResidents();
-      setResidents(data);
-    } catch (error) {
-      console.error("Failed to add resident:", error);
-    }
+    await addResident(userData);
+    const res = await getResidents();
+    setResidents(res.data);
   };
 
   const handleBlockResident = async (
