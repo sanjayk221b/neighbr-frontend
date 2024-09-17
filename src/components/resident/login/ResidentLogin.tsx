@@ -18,36 +18,31 @@ const ResidentLogin = () => {
       setError("Please enter both email and password");
       return;
     }
-    try {
-      const { resident } = await residentLogin(email, password);
-      if (resident) {
-        console.log(resident);
-        dispatch(setResidentLogin(resident));
-        navigate("/");
-      } else {
-        setError("Invalid email or password");
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("Error during login. Please try again later.");
+    const response = await residentLogin(email, password);
+    if (response.success) {
+      const resident = response.data.resident;
+      dispatch(setResidentLogin(resident));
+      navigate("/");
+    } else {
+      setError("Invalid email or password");
     }
   };
 
-  // const handleForgotPassword = () => {
-  //   navigate("/forgot-password");
-  // };
+  const handleForgotPassword = () => {
+    navigate("/forgot-password");
+  };
 
   return (
     <div className="h-screen flex justify-center items-center bg-blue-50">
-      <div className="flex max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="w-1/2 bg-blue-200 flex justify-center items-center p-12">
+      <div className="flex max-w-4xl md:w-full  bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="w-1/2 bg-blue-200 hidden md:flex justify-center items-center p-12">
           <img
             src="/neighbr.webp"
             alt="Neighbr Logo"
             className="max-w-full h-auto"
           />
         </div>
-        <div className="w-1/2 p-8">
+        <div className="w-full md:w-1/2  p-8">
           <h2 className="text-3xl font-bold mb-6 text-blue-800 text-center">
             Resident Login
           </h2>
@@ -93,12 +88,12 @@ const ResidentLogin = () => {
             </button>
           </form>
           <div className="mt-4 text-center">
-            {/* <button
+            <button
               onClick={handleForgotPassword}
               className="text-blue-600 hover:underline"
             >
               Forgot Password?
-            </button> */}
+            </button>
           </div>
         </div>
       </div>

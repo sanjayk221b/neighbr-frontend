@@ -6,6 +6,7 @@ import ForgotPassword from "@/components/common/forgot-password/ForgotPassword";
 
 const ResidentLoginPage = lazy(() => import("../pages/resident/ResidentLoginPage"));
 const ResidentHomePage = lazy(() => import("../pages/resident/ResidentHomePage"));
+const Otp = lazy(() => import("@/components/common/forgot-password/Otp"));
 const ResidentVisitorsPage = lazy(() => import("../pages/resident/ResidentVisitorsPage"));
 const ResidentServicesPage = lazy(() => import("../pages/resident/ResidentServicesPage"));
 const ResidentComplaintsPage = lazy(() => import("../pages/resident/ResidentComplaintsPage"));
@@ -17,7 +18,8 @@ const ResidentRoutes = () => {
     <Suspense fallback={<NLoader />}>
       <Routes>
         <Route path="/" element={<ResidentLoginPage />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/forgot-password" element={<ForgotPassword userType="resident" />} />
+        <Route path="/verify-otp" element={<Otp/>} />
         <Route path="/home" element={ResidentProtect(ResidentHomePage)} />
         <Route path="/visitors" element={ResidentProtect(ResidentVisitorsPage)} />
         <Route path="/services" element={ResidentProtect(ResidentServicesPage)} />

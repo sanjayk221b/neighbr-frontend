@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import { ThemeProvider } from "@/components/ui/theme/theme-provider";
 import CaretakerProtect from "@/components/hoc/CaretakerProtect";
 import { NLoader } from "@/components/ui/loader";
+import ForgotPassword from "@/components/common/forgot-password/ForgotPassword";
 
 const CaretakerLoginPage = lazy(() => import("../pages/caretaker/CaretakerLoginPage"));
 const CaretakerHomePage = lazy(() => import("../pages/caretaker/CaretakerHomePage"));
@@ -18,6 +19,7 @@ const CaretakerRoutes = () => {
       <Suspense fallback={<NLoader />}>
         <Routes>
           <Route path="/" element={<CaretakerLoginPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword userType="caretaker" />} />
           <Route path="/home" element={CaretakerProtect(CaretakerHomePage)} />
           <Route path="/visitors" element={CaretakerProtect(CaretakerVisitorsPage)} />
           <Route path="/workers" element={CaretakerProtect(CaretakerWorkersPage)} />

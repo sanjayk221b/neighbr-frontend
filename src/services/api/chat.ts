@@ -3,23 +3,15 @@ import chatRoutes from "../endpoints/chatEndpoints";
 import { IMessage, IParticipant } from "@/types";
 
 export const sendMessage = async (formData: FormData): Promise<IMessage> => {
-  try {
-    const response = await axiosInstance.post(chatRoutes.sendMessage, formData);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.post(chatRoutes.sendMessage, formData);
+  return response.data;
 };
 
 export const getMessages = async (conversationId: string) => {
-  try {
-    const response = await axiosInstance.get(
-      `${chatRoutes.getMessages}/${conversationId}`
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get(
+    `${chatRoutes.getMessages}/${conversationId}`
+  );
+  return response.data;
 };
 
 export const createConversation = async (
@@ -27,33 +19,22 @@ export const createConversation = async (
   isGroup: boolean,
   groupName?: string
 ) => {
-  try {
-    const response = await axiosInstance.post(chatRoutes.createConversation, {
-      participants,
-      isGroup,
-      groupName,
-    });
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.post(chatRoutes.createConversation, {
+    participants,
+    isGroup,
+    groupName,
+  });
+  return response.data;
 };
 
 export const getConversations = async (userId: string) => {
-  try {
-    const response = await axiosInstance.get(
-      `${chatRoutes.getConversations}/${userId}`
-    );
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get(
+    `${chatRoutes.getConversations}/${userId}`
+  );
+  return response.data;
 };
+
 export const getUsers = async () => {
-  try {
-    const response = await axiosInstance.get(chatRoutes.getUsers);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  const response = await axiosInstance.get(chatRoutes.getUsers);
+  return response.data;
 };

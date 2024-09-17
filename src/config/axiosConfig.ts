@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -27,7 +27,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     console.error("API Error:", error);
 
-    toast.error(error.response?.data?.message || "Something went wrong");
+    // toast.error(error.response?.data?.message || "Something went wrong");
 
     return Promise.reject(error);
   }

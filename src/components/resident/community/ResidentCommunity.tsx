@@ -14,14 +14,9 @@ const ResidentCommunity = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      try {
-        const response = await getPosts();
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      } finally {
-        setLoading(false);
-      }
+      const response = await getPosts();
+      setPosts(response.data);
+      setLoading(false);
     };
 
     fetchPosts();
@@ -32,7 +27,9 @@ const ResidentCommunity = () => {
       {loading ? (
         <ShimmerCommunityFeed />
       ) : (
-        <CommunityFeed initialPosts={posts} currentUser={residentInfo} />
+        <>
+          <CommunityFeed initialPosts={posts} currentUser={residentInfo} />
+        </>
       )}
     </div>
   );
