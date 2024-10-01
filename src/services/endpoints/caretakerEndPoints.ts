@@ -8,6 +8,7 @@ const caretakerRoutes = {
   updateComplaint: "/management/complaints/update",
   getAllServiceRequests: "/management/services/requests/all",
   updateServiceRequests: "management/services/requests/:id/update",
+  getCaretakerDashboardData: "/management/dashboard/caretaker"
 };
 
 export default caretakerRoutes;

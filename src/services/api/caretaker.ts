@@ -1,6 +1,7 @@
 import axiosInstance from "@/config/axiosConfig";
 import caretakerRoutes from "../endpoints/caretakerEndPoints";
 import { IVisitor, IComplaint, IService } from "../../types";
+import axios from "axios";
 
 export const caretakerLogin = async (email: string, password: string) => {
   const response = await axiosInstance.post(caretakerRoutes.caretakerLogin, {
@@ -72,5 +73,13 @@ export const updateServiceRequests = async (
     `${caretakerRoutes.updateServiceRequests.replace(":id", serviceId)}`,
     updateData
   );
+  return response.data;
+};
+
+export const getCaretakerDashboardData = async () => {
+  const response = await axiosInstance.get(
+    caretakerRoutes.getCaretakerDashboardData
+  );
+
   return response.data;
 };

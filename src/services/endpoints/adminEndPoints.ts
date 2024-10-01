@@ -10,6 +10,7 @@ const adminRoutes = {
   getAllComplaints: "/management/complaints/all/admin",
   createAnnouncement: "management/announcements/create",
   getAnnouncements: "/management/announcements/",
+  getAdminDashboardData: "/management/dashboard/admin",
 };
 
 export default adminRoutes;

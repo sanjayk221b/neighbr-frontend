@@ -22,7 +22,7 @@ const ResidentLogin = () => {
     if (response.success) {
       const resident = response.data.resident;
       dispatch(setResidentLogin(resident));
-      navigate("/");
+      // navigate("/resident/home");
     } else {
       setError("Invalid email or password");
     }

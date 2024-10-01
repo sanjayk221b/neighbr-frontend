@@ -3,13 +3,13 @@ import {
   FaUsers,
   FaCog,
   FaExclamationCircle,
-  FaBullhorn,
+  // FaBullhorn,
 } from "react-icons/fa";
 
 export const navItems = [
-  { name: "Home", path: "/home", icon: FaHome },
-  { name: "Visitors", path: "/visitors", icon: FaUsers },
-  { name: "Services", path: "/services", icon: FaCog },
-  { name: "Complaints", path: "/complaints", icon: FaExclamationCircle },
-  { name: "Announcements", path: "/announcements", icon: FaBullhorn },
+  { name: "Home", path: "/resident/home", icon: FaHome },
+  { name: "Visitors", path: "/resident/visitors", icon: FaUsers },
+  { name: "Services", path: "/resident/services", icon: FaCog },
+  { name: "Complaints", path: "/resident/complaints", icon: FaExclamationCircle },
+  // { name: "Announcements", path: "/announcements", icon: FaBullhorn },
 ];
