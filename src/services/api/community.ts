@@ -35,7 +35,6 @@ export const createComment = async (postId: string, content: string) => {
 export const getCommentsByPostId = async (postId: string) => {
   const url = communityRoutes.getCommentsByPostId.replace(":postId", postId);
   const response = await axiosInstance.get(url);
-  console.log(response.data);
   return response.data;
 };
 

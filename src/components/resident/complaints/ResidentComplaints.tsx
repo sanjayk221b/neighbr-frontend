@@ -1,48 +1,57 @@
-import React, { useState, useEffect } from "react";
-import { FaPlus } from "react-icons/fa";
+import React, { useState } from "react";
+import { FaPlus, FaSearch } from "react-icons/fa";
 import { getComplaints } from "../../../services/api/resident";
 import ComplaintCard from "./ComplaintCard";
 import NewComplaintForm from "./NewComplaintFrom";
 import { IComplaint } from "@/types";
 import Shimmer from "@/components/ui/shimmer/ShimmerCard";
+import { usePaginatedData } from "@/hooks/usePaginatedData";
+import PaginationControls from "@/components/common/PaginationControls";
+import { SearchInput } from "@/components/ui/search-input";
 
 const ResidentComplaints: React.FC = () => {
   const [showNewComplaintForm, setShowNewComplaintForm] = useState(false);
-  const [complaints, setComplaints] = useState<IComplaint[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchComplaints();
-  }, []);
+  const {
+    data: complaints,
+    isLoading,
+    error,
+    currentPage,
+    limit,
+    totalPages,
+    setCurrentPage,
+    setLimit,
+    setSearchTerm,
+    refetch,
+  } = usePaginatedData<IComplaint>(getComplaints, { initialLimit: 10 });
 
-  const fetchComplaints = async () => {
-    try {
-      setIsLoading(true);
-      const fetchedComplaints = await getComplaints();
-      setComplaints(fetchedComplaints);
-      setError(null);
-    } catch (err) {
-      setError("Failed to fetch complaints. Please try again later.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleComplaintAdded = (newComplaint: IComplaint) => {
-    setComplaints((prev) => [newComplaint, ...prev]);
+  const handleComplaintAdded = () => {
+    refetch();
+    setShowNewComplaintForm(false);
   };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
         <h2 className="text-3xl font-bold text-gray-800">Your Complaints</h2>
-        <button
-          onClick={() => setShowNewComplaintForm(!showNewComplaintForm)}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center text-sm shadow-md"
-        >
-          <FaPlus className="mr-2" /> New Complaint
-        </button>
+        <div className="flex items-center gap-4 w-full sm:w-auto">
+          <div className="relative flex-grow sm:flex-grow-0">
+            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <SearchInput
+              type="text"
+              placeholder="Search complaints..."
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm text-gray-700"
+              onSearch={(value) => setSearchTerm(value)}
+              debounceTime={500}
+            />
+          </div>
+          <button
+            onClick={() => setShowNewComplaintForm(!showNewComplaintForm)}
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 flex items-center text-sm shadow-md"
+          >
+            <FaPlus className="mr-2" /> New Complaint
+          </button>
+        </div>
       </div>
 
       {showNewComplaintForm && (
@@ -54,7 +63,7 @@ const ResidentComplaints: React.FC = () => {
 
       {isLoading ? (
         <div className="space-y-4">
-          {[...Array(5)].map((_, index) => (
+          {[...Array(limit)].map((_, index) => (
             <Shimmer key={index} />
           ))}
         </div>
@@ -64,10 +73,24 @@ const ResidentComplaints: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {complaints.map((complaint) => (
-            <ComplaintCard key={complaint._id} complaint={complaint} />
-          ))}
+          {complaints.length > 0 ? (
+            complaints.map((complaint) => (
+              <ComplaintCard key={complaint._id} complaint={complaint} />
+            ))
+          ) : (
+            <p className="text-gray-500">No complaints found.</p>
+          )}
         </div>
+      )}
+
+      {!isLoading && complaints.length > 0 && totalPages && (
+        <PaginationControls
+          currentPage={currentPage}
+          limit={limit}
+          totalPages={totalPages}
+          setLimit={setLimit}
+          onPageChange={setCurrentPage}
+        />
       )}
     </div>
   );

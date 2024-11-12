@@ -25,7 +25,7 @@ const CommunityProfileCard = () => {
           <ul className="space-y-2">
             <li>
               <a
-                href="#"
+                href="/resident/profile"
                 className="flex items-center text-gray-700 hover:text-blue-500"
               >
                 <User className="mr-2" size={20} />
@@ -34,7 +34,7 @@ const CommunityProfileCard = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/resident/chats"
                 className="flex items-center text-gray-700 hover:text-blue-500"
               >
                 <MessageSquare className="mr-2" size={20} />

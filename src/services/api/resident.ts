@@ -22,9 +22,13 @@ export const addVisitor = async (visitorData: FormData) => {
   return response.data;
 };
 
-export const getVisitors = async (page: number = 1, limit: number = 10) => {
+export const getVisitors = async (
+  page: number = 1,
+  limit: number = 10,
+  search = ""
+) => {
   const response = await axiosInstance.get(
-    residentRoutes.getVisitors(page, limit)
+    residentRoutes.getVisitors(page, limit, search)
   );
   return response.data;
 };
@@ -56,8 +60,14 @@ export const addComplaint = async (complaintData: FormData) => {
   return response.data;
 };
 
-export const getComplaints = async () => {
-  const response = await axiosInstance.get(residentRoutes.getComplaints);
+export const getComplaints = async (
+  page: number,
+  limit: number,
+  search: string
+) => {
+  const response = await axiosInstance.get(residentRoutes.getComplaints, {
+    params: { page, limit, search },
+  });
   return response.data;
 };
 

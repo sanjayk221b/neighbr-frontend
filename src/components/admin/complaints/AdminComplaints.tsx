@@ -25,7 +25,8 @@ import { PopulatedComplaint } from "@/types";
 
 const AdminComplaints: React.FC = () => {
   const [complaints, setComplaints] = useState<PopulatedComplaint[]>([]);
-  const [selectedComplaint, setSelectedComplaint] = useState<PopulatedComplaint | null>(null);
+  const [selectedComplaint, setSelectedComplaint] =
+    useState<PopulatedComplaint | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const { toast } = useToast();
 
@@ -35,7 +36,7 @@ const AdminComplaints: React.FC = () => {
 
   const fetchComplaints = async () => {
     try {
-      const data = await getAllComplaints();
+      const { data } = await getAllComplaints();
       setComplaints(data);
     } catch (error) {
       console.error("Error fetching complaints:", error);
