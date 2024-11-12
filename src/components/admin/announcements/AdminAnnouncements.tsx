@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { createAnnouncement, getAnnouncements } from "@/services/api/admin";
-import { IAnnouncement } from "@/types/announcement"; // Assuming you have this type defined
+import { IAnnouncement } from "@/types/announcement";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -30,12 +30,8 @@ const AdminAnnouncements: React.FC = () => {
   }, []);
 
   const fetchAnnouncements = async () => {
-    try {
-      const res = await getAnnouncements();
-      setAnnouncements(res.data);
-    } catch (error) {
-      console.error("Error fetching announcements:", error);
-    }
+    const res = await getAnnouncements();
+    setAnnouncements(res.data);
   };
 
   const handleInputChange = (
@@ -53,19 +49,15 @@ const AdminAnnouncements: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await createAnnouncement(newAnnouncement);
-      setNewAnnouncement({
-        title: "",
-        content: "",
-        date: new Date().toISOString().split("T")[0],
-        type: "News",
-        status: "Active",
-      });
-      fetchAnnouncements();
-    } catch (error) {
-      console.error("Error creating announcement:", error);
-    }
+    await createAnnouncement(newAnnouncement);
+    setNewAnnouncement({
+      title: "",
+      content: "",
+      date: new Date().toISOString().split("T")[0],
+      type: "News",
+      status: "Active",
+    });
+    fetchAnnouncements();
   };
 
   return (

@@ -1,36 +1,19 @@
 import axios from "axios";
-// import { toast } from "react-toastify";
-
-const BASE_URL = import.meta.env.VITE_BASE_URL;
+import { requestInterceptor } from "./interceptors/requestInterceptor";
+import { responseInterceptor } from "./interceptors/responseInterceptor";
 
 const axiosInstance = axios.create({
-  baseURL: `${BASE_URL}/api`,
+  baseURL: `${import.meta.env.VITE_BASE_URL}/api`,
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    if (config.data instanceof FormData) {
-      config.headers["Content-Type"] = "multipart/form-data";
-    } else {
-      config.headers["Content-Type"] = "application/json";
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
+axiosInstance.interceptors.request.use(requestInterceptor, (error) =>
+  Promise.reject(error)
 );
 
 axiosInstance.interceptors.response.use(
   (response) => response,
-  (error) => {
-    console.error("API Error:", error);
-
-    // toast.error(error.response?.data?.message || "Something went wrong");
-
-    return Promise.reject(error);
-  }
+  responseInterceptor
 );
 
 export default axiosInstance;

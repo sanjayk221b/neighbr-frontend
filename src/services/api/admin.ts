@@ -93,3 +93,8 @@ export const getAnnouncements = async () => {
   const response = await axiosInstance.get(adminRoutes.getAnnouncements);
   return response.data;
 };
+
+export const getAdminDashboardData = async () => {
+  const response = await axiosInstance.get(adminRoutes.getAdminDashboardData);
+  return response.data;
+};

@@ -12,7 +12,7 @@ import ConfirmationModal from "@/components/ui/confirmationModal";
 const ResidentNavbar = () => {
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,7 +28,7 @@ const ResidentNavbar = () => {
   const handleConfirmLogout = () => {
     residentLogout();
     dispatch(setResidentLogout());
-    navigate("/");
+    navigate("/resident/");
     setIsModalOpen(false);
   };
 
@@ -71,7 +71,7 @@ const ResidentNavbar = () => {
               ))}
               <button
                 className="text-gray-600 hover:bg-gray-100 p-2 rounded-full transition duration-300 ease-in-out"
-                onClick={() => navigate("/chats")}
+                onClick={() => navigate("/resident/chats")}
                 title="Messages"
               >
                 <FaEnvelope className="h-5 w-5" />
@@ -91,7 +91,7 @@ const ResidentNavbar = () => {
                   <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
                     <button
                       className=" w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 flex items-center"
-                      onClick={() => navigate("/profile")}
+                      onClick={() => navigate("/resident/profile")}
                     >
                       <User className="mr-2" size={18} />
                       Profile
@@ -110,7 +110,7 @@ const ResidentNavbar = () => {
             <div className="md:hidden flex items-center">
               <button
                 className="text-gray-600 hover:bg-gray-100 p-2 rounded-full transition duration-300 ease-in-out mr-2"
-                onClick={() => navigate("/chats")}
+                onClick={() => navigate("/resident/chats")}
                 title="Messages"
               >
                 <FaEnvelope className="h-5 w-5" />
@@ -148,7 +148,7 @@ const ResidentNavbar = () => {
               ))}
               <button
                 className=" px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-100 w-full text-left flex items-center"
-                onClick={() => navigate("/profile")}
+                onClick={() => navigate("/resident/profile")}
               >
                 <User className="mr-2" size={18} />
                 Profile

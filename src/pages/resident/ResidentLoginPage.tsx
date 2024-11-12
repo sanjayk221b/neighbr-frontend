@@ -9,7 +9,7 @@ const OwnerLoginPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (residentLoggedIn) {
-      navigate("/home");
+      navigate("/resident/home");
     }
   });
   return (

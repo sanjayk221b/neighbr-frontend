@@ -30,12 +30,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({ postId }) => {
   }, [postId]);
 
   const handleCreateComment = async (postId: string, content: string) => {
-    try {
-      const newComment = await createComment(postId, content);
-      setComments((prevComments) => [...prevComments, newComment.data]);
-    } catch (error) {
-      setError("Error creating comment");
-    }
+    const newComment = await createComment(postId, content);
+    setComments((prevComments) => [...prevComments, newComment.data]);
   };
 
   if (loading) return <p>Loading comments...</p>;

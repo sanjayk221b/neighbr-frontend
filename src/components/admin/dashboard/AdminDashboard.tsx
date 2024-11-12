@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   BarChart,
   Bar,
@@ -11,35 +10,52 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Users, Briefcase, MessageSquare, UserCheck } from "lucide-react";
+import { getAdminDashboardData, getCaretakers } from "@/services/api/admin";
 
 const AdminDashboard: React.FC = () => {
-  // Dummy data for the dashboard
+  const [residents, setResidents] = useState<number>();
+  const [workers, setWorkers] = useState<number>();
+  const [caretakers, setCaretakers] = useState<number>();
+  const [complaints, setComplaints] = useState<number>();
+
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
+
+  const fetchDashboardData = async () => {
+    const { data } = await getAdminDashboardData();
+    const response = await getCaretakers();
+    setResidents(data.residentsCount);
+    setWorkers(data.workersCount);
+    setComplaints(data.pendingComplaintsCount);
+    setCaretakers(response.data.length);
+  };
+
   const stats = [
-    { title: "Total Users", value: 1234, icon: Users, color: "text-blue-600" },
     {
-      title: "Active Services",
-      value: 56,
+      title: "Total Residents",
+      value: residents,
+      icon: Users,
+      color: "text-blue-600",
+    },
+    {
+      title: "Total Caretakers",
+      value: caretakers,
       icon: Briefcase,
       color: "text-green-600",
     },
     {
-      title: "Pending Complaints",
-      value: 23,
-      icon: MessageSquare,
-      color: "text-yellow-600",
-    },
-    {
       title: "Active Workers",
-      value: 89,
+      value: workers,
       icon: UserCheck,
       color: "text-purple-600",
     },
-  ];
-
-  const recentComplaints = [
-    { id: 1, user: "John Doe", service: "Plumbing", status: "Pending" },
-    { id: 2, user: "Jane Smith", service: "Electricity", status: "Resolved" },
-    { id: 3, user: "Bob Johnson", service: "Cleaning", status: "In Progress" },
+    {
+      title: "Pending Complaints",
+      value: complaints,
+      icon: MessageSquare,
+      color: "text-yellow-600",
+    },
   ];
 
   const chartData = [
@@ -74,39 +90,20 @@ const AdminDashboard: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="col-span-1">
           <CardHeader>
-            <CardTitle>Recent Complaints</CardTitle>
+            <CardTitle>Services Overview</CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {recentComplaints.map((complaint) => (
-                <div
-                  key={complaint.id}
-                  className="flex items-center justify-between"
-                >
-                  <div>
-                    <p className="font-medium">{complaint.user}</p>
-                    <p className="text-sm text-muted-foreground">
-                      {complaint.service}
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className={
-                      complaint.status === "Resolved"
-                        ? "bg-green-100 text-green-800"
-                        : complaint.status === "In Progress"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-red-100 text-red-800"
-                    }
-                  >
-                    {complaint.status}
-                  </Button>
-                </div>
-              ))}
-            </div>
+          <CardContent className="h-[300px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="services" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
-
         <Card className="col-span-1">
           <CardHeader>
             <CardTitle>Services Overview</CardTitle>
