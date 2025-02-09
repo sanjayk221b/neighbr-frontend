@@ -10,7 +10,8 @@ const CaretakerVisitors: React.FC = () => {
   const fetchVisitors = async () => {
     try {
       const data = await getVisitors();
-      setVisitors(data);
+      console.log(data);
+      setVisitors(data.data.data);
     } catch (error) {
       console.error("Failed to fetch visitors:", error);
     }

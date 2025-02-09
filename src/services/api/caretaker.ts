@@ -1,7 +1,6 @@
 import axiosInstance from "@/config/axiosConfig";
 import caretakerRoutes from "../endpoints/caretakerEndPoints";
 import { IVisitor, IComplaint, IService } from "../../types";
-import axios from "axios";
 
 export const caretakerLogin = async (email: string, password: string) => {
   const response = await axiosInstance.post(caretakerRoutes.caretakerLogin, {
