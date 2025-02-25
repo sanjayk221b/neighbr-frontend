@@ -19,7 +19,7 @@ const CaretakerProfile: React.FC<CaretakerProfileProps> = ({ caretaker }) => {
         <CardContent className="p-6">
           <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
             <Avatar className="h-32 w-32">
-              <AvatarImage src={caretaker.imageUrl} alt={caretaker.name} />
+              <AvatarImage src={caretaker.image} alt={caretaker.name} />
               <AvatarFallback>{caretaker.name.charAt(0)}</AvatarFallback>
             </Avatar>
             <div className="flex-1">

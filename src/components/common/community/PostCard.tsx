@@ -27,6 +27,11 @@ const PostCard: React.FC<PostCardProps> = ({
   onDelete,
   currentUser,
 }) => {
+  const hasLiked =
+    Array.isArray(likes) && currentUser?._id
+      ? likes.includes(currentUser._id)
+      : false;
+
   return (
     <div className="border-b border-gray-200 p-4 relative">
       <div className="absolute top-4 right-4">
@@ -39,7 +44,11 @@ const PostCard: React.FC<PostCardProps> = ({
       </div>
       <PostHeader author={author} timestamp={updatedAt} />
       <PostContent content={content} images={images} />
-      <PostActions likes={likes} />
+      <PostActions
+        postId={postId}
+        likes={(likes ?? []).length}
+        hasLiked={hasLiked}
+      />
       <CommentSection postId={postId} />
     </div>
   );

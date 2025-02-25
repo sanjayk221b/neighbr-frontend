@@ -59,7 +59,7 @@ const CaretakerNavbar = () => {
                 onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
               >
                 <img
-                  src={caretakerInfo?.imageUrl}
+                  src={caretakerInfo?.image}
                   alt="Profile"
                   className="h-8 w-8 rounded-full border"
                 />

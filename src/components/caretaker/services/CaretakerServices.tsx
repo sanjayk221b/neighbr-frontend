@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getAllServiceRequests, updateServiceRequests } from "../../../services/api/caretaker";
+import {
+  getAllServiceRequests,
+  updateServiceRequests,
+} from "../../../services/api/caretaker";
 import { IService, IWorker } from "../../../types";
 import Swal from "sweetalert2";
 import ServiceDetailsModal from "./ServiceDetailsModal";
@@ -20,7 +23,7 @@ const CaretakerServices: React.FC = () => {
     setIsLoading(true);
     try {
       const data = await getAllServiceRequests();
-      setServices(data);
+      setServices(data.data);
     } catch (error) {
       console.error("Error fetching services:", error);
     } finally {
@@ -148,7 +151,7 @@ const CaretakerServices: React.FC = () => {
           service={selectedService}
           onClose={handleCloseModal}
           onUpdate={handleUpdateService}
-          workers={workers}  
+          workers={workers}
         />
       )}
     </div>

@@ -7,7 +7,7 @@ export interface IPost {
   };
   content: string;
   images?: string[];
-  likes: number;
+  likes: string[];
   comments: number;
   isDeleted: boolean;
   createdAt: Date;

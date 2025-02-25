@@ -19,7 +19,7 @@ const CaretakerComplaints: React.FC = () => {
   const fetchComplaints = async () => {
     try {
       const data = await getAllComplaints();
-      setComplaints(data);
+      setComplaints(data.data);
     } catch (error) {
       console.error("Error fetching complaints:", error);
     }

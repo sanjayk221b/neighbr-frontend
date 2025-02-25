@@ -152,7 +152,7 @@ const AdminCaretakers: React.FC = () => {
               <tr key={caretaker._id} className="hover:bg-muted/50">
                 <td className="px-4 py-4 whitespace-nowrap">
                   <img
-                    src={caretaker.imageUrl}
+                    src={caretaker.image}
                     alt={`${caretaker.name}'s profile`}
                     className="w-10 h-10 rounded-full object-cover"
                   />

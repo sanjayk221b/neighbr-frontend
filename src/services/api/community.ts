@@ -50,3 +50,9 @@ export const getReports = async (page: number = 1, limit: number = 10) => {
   });
   return response.data;
 };
+
+export const toggleLikePost = async (postId: string) => {
+  const url = communityRoutes.likePost.replace(":postId", postId);
+  const response = await axiosInstance.post(url);
+  return response.data;
+};
